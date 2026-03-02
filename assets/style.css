@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; max-width: 720px; margin: 0 auto; padding: 1.5rem; }
+header { margin-bottom: 2rem; }
+.build-time { color: #666; font-size: 0.9rem; }
+.project-card { border: 1px solid #eee; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+.project-card p { margin: 0.4rem 0; }

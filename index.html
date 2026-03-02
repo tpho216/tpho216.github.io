@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Portfolio</h1>
+    <p id="build-time" class="build-time">Last updated: —</p>
+  </header>
+  <main id="projects"></main>
+  <script>
+    (async function () {
+      const buildInfo = await fetch('content/build-info.json').then(r => r.json()).catch(() => ({}));
+      const buildTimeEl = document.getElementById('build-time');
+      if (buildInfo.buildTime) {
+        const d = new Date(buildInfo.buildTime);
+        buildTimeEl.textContent = 'Last updated: ' + d.toLocaleString();
+      }
+
+      const projects = await fetch('content/projects.json').then(r => r.json()).catch(() => []);
+      const main = document.getElementById('projects');
+      const keys = ['project', 'description', 'tasks', 'technologies', 'skills', 'dates', 'reflections'];
+      projects.forEach((row) => {
+        const card = document.createElement('article');
+        card.className = 'project-card';
+        let html = '';
+        keys.forEach((key) => {
+          const label = key.charAt(0).toUpperCase() + key.slice(1);
+          const val = row[key] || row[label] || '';
+          if (val) html += '<p><strong>' + label + ':</strong> ' + escapeHtml(String(val)) + '</p>';
+        });
+        card.innerHTML = html || '<p>No content</p>';
+        main.appendChild(card);
+      });
+      function escapeHtml(s) {
+        const div = document.createElement('div');
+        div.textContent = s;
+        return div.innerHTML;
+      }
+    })();
+  </script>
+</body>
+</html>
