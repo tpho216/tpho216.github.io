@@ -1,1 +1,12 @@
-[{"project":"Example","description":"Set GOOGLE_SHEET_CSV_URL in repo secrets.","tasks":"","technologies":"","skills":"","dates":""}]
+[
+  {
+    "project": "SWAMS Community Health Platform (Web + Mobile)",
+    "description": "Digital platform supporting Aboriginal communities with health information, research data collection, and cross-community communication.",
+    "responsibilities": "Build React admin portal and React Native mobile app, integrate existing Firebase backend, establish deployment processes and team development standards.",
+    "highlights": "Architected cross-platform solution using modular design patterns, enabling code reuse between web and mobile. Established CI/CD pipeline using Expo EAS for automated testing and deployment.",
+    "impact": "Delivered platform serving 5 Aboriginal communities, facilitating health research data collection and improving community engagement.",
+    "technologies": "React, React Native (Expo), TypeScript, Firebase Functions, Firestore, Firebase Auth, Firebase Messaging, Redux, modern React patterns (Context API, hooks)",
+    "skills": "Full-stack development, Mobile Application Development, Serverless Architecture, Scalable Frontend Design, Team Technical Leadership",
+    "dates": "2021–2022"
+  }
+]
