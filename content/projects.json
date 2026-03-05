@@ -8,5 +8,13 @@
     "technologies": "React, React Native (Expo), TypeScript, Firebase Functions, Firestore, Firebase Auth, Firebase Messaging, Redux, modern React patterns (Context API, hooks)",
     "skills": "Full-stack development, Mobile Application Development, Serverless Architecture, Scalable Frontend Design, Team Technical Leadership",
     "dates": "2021–2022"
+  },
+  {
+    "project": "Structural & Catalogue Management Platform",
+    "description": "Online desktop platform supporting complex structural calculations, workflow validation, catalogue management, JSON Schema–validated templates, and admin portal functionality for civil engineering operations.",
+    "technologies": "NestJS, MikroORM, PostgreSQL (secure), JWT (Passport), Swagger, Jest, TypeScript, React (admin portal), SQLite (testing), JSON Schema, AWS ECS, S3, CloudFront, ECR, ALB, secure private subnets, networking, CI/CD, unit tests, E2E tests, database migrations",
+    "responsibilities": "Drive project discovery and scope alignment, define backend architecture and data models, implement authentication and CRUD APIs, support admin portal development, document structural modelling decisions, define and enforce JSON Schema validations for catalogue and template data, and seed test/real databases.",
+    "highlights": "Bridged domain requirements with engineering delivery, designed modular backend architecture, and implemented secure AWS infrastructure including ECS, S3, CloudFront, ECR, ALB, and private subnets. Captured complex structural logic (bracing nodes, base plates, ULS/SLS formulas), implemented scalable ERD and functional modules, and established CI/CD with unit and E2E tests. Leveraged JSON Schema to enforce validation and generate dynamic catalogue/templates, reducing repetitive frontend coding, ensuring consistent data, and simplifying future maintenance.",
+    "impact": "Delivered a production-ready platform currently used in civil engineering operations, enabling reliable catalogue and bracing management workflows with validated templates. Supported secure database deployment, API stability, and production-ready admin portal, contributing to client confidence, operational continuity, and reduced development overhead."
   }
 ]
