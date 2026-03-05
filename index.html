@@ -3,45 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
+  <title>Peter Ho — Portfolio</title>
   <link rel="stylesheet" href="assets/style.css" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="Portfolio of Peter Ho — projects, architecture, and engineering work." />
+
+  <!-- SQLite in the browser (WASM). Loaded from CDN for static hosting. -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/sql-wasm.js"></script>
+  <script defer src="assets/app.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Portfolio</h1>
-    <p id="build-time" class="build-time">Last updated: —</p>
-  </header>
-  <main id="projects"></main>
-  <script>
-    (async function () {
-      const buildInfo = await fetch('content/build-info.json').then(r => r.json()).catch(() => ({}));
-      const buildTimeEl = document.getElementById('build-time');
-      if (buildInfo.buildTime) {
-        const d = new Date(buildInfo.buildTime);
-        buildTimeEl.textContent = 'Last updated: ' + d.toLocaleString();
-      }
+  <div class="bg"></div>
 
-      const projects = await fetch('content/projects.json').then(r => r.json()).catch(() => []);
-      const main = document.getElementById('projects');
-      const keys = ['project', 'description', 'tasks', 'technologies', 'skills', 'dates', 'reflections'];
-      projects.forEach((row) => {
-        const card = document.createElement('article');
-        card.className = 'project-card';
-        let html = '';
-        keys.forEach((key) => {
-          const label = key.charAt(0).toUpperCase() + key.slice(1);
-          const val = row[key] || row[label] || '';
-          if (val) html += '<p><strong>' + label + ':</strong> ' + escapeHtml(String(val)) + '</p>';
-        });
-        card.innerHTML = html || '<p>No content</p>';
-        main.appendChild(card);
-      });
-      function escapeHtml(s) {
-        const div = document.createElement('div');
-        div.textContent = s;
-        return div.innerHTML;
-      }
-    })();
-  </script>
+  <div class="container">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand">PH</div>
+        <div class="brand-meta">
+          <div class="brand-name">Peter Ho</div>
+          <div class="brand-sub">Software Engineer — architecture-minded, product-focused</div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <a class="link" href="react/" id="react-link">View React version</a>
+        <span class="dot">•</span>
+        <span id="build-time" class="build-time" title="Build time (UTC)">Last updated: —</span>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Global search">
+      <h1 class="hero-title">Selected work</h1>
+      <p class="hero-subtitle">
+        Search projects by tech, skills, responsibilities, highlights, and impact. SQLite runs in your browser via WASM.
+      </p>
+
+      <div class="search-shell">
+        <div class="search-row">
+          <span class="search-icon" aria-hidden="true"></span>
+          <input
+            id="global-search"
+            class="search-input"
+            type="search"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder='Try: "react performance", tech:python, skill:leadership, year:2024'
+            aria-label="Search across projects"
+          />
+          <button id="clear-search" class="search-clear" type="button" aria-label="Clear search">Clear</button>
+        </div>
+        <div class="search-hint">
+          <span class="kbd">/</span> focus · <span class="kbd">Esc</span> clear · operators: <code>tech:</code> <code>skill:</code> <code>year:</code>
+        </div>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite">
+        Initializing…
+      </div>
+    </section>
+
+    <main class="content" aria-label="Projects">
+      <section class="section-head">
+        <div class="results-meta">
+          <div class="results-count" id="results-count">—</div>
+          <div class="results-query" id="results-query"></div>
+        </div>
+      </section>
+
+      <section id="projects" class="grid" aria-label="Project results"></section>
+
+      <section id="empty" class="empty" hidden>
+        <div class="empty-title">No matching projects</div>
+        <div class="empty-sub">
+          Try fewer terms, or use operators like <code>tech:</code>, <code>skill:</code>, <code>year:</code>.
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-left">
+        <span class="muted">This site is static. Content comes from a Google Sheet at deploy time.</span>
+      </div>
+      <div class="footer-right">
+        <a class="link" href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top</a>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
