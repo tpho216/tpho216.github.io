@@ -1,5 +1,11 @@
-* { box-sizing: border-box; }
-html, body { height: 100%; }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
 
 :root {
   --bg: #0b0f17;
@@ -82,7 +88,7 @@ body {
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, rgba(119, 168, 255, 0.85), rgba(103, 232, 163, 0.65));
   color: rgba(0, 0, 0, 0.8);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
   user-select: none;
 }
 
@@ -104,7 +110,9 @@ body {
   justify-content: flex-end;
 }
 
-.dot { color: var(--muted); }
+.dot {
+  color: var(--muted);
+}
 
 .build-time {
   color: var(--muted);
@@ -116,6 +124,7 @@ body {
   text-decoration: none;
   border-bottom: 1px solid transparent;
 }
+
 .link:hover {
   border-bottom-color: var(--border);
 }
@@ -176,7 +185,10 @@ body {
   font-size: 1.05rem;
   padding: 10px 10px;
 }
-.search-input::placeholder { color: var(--muted); }
+
+.search-input::placeholder {
+  color: var(--muted);
+}
 
 .search-clear {
   border: 1px solid var(--border);
@@ -186,6 +198,7 @@ body {
   border-radius: 999px;
   cursor: pointer;
 }
+
 .search-clear:hover {
   background: rgba(127, 127, 127, 0.12);
 }
@@ -218,8 +231,14 @@ code {
   color: var(--muted);
   font-size: 0.95rem;
 }
-.status[data-tone="success"] { color: var(--ok); }
-.status[data-tone="error"] { color: var(--err); }
+
+.status[data-tone="success"] {
+  color: var(--ok);
+}
+
+.status[data-tone="error"] {
+  color: var(--err);
+}
 
 .content {
   margin-top: 18px;
@@ -259,7 +278,9 @@ code {
 }
 
 @media (min-width: 860px) {
-  .grid { grid-template-columns: 1fr 1fr; }
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .card {
@@ -269,6 +290,7 @@ code {
   padding: 16px 16px 14px;
   transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
 }
+
 .card:hover {
   transform: translateY(-2px);
   border-color: rgba(119, 168, 255, 0.35);
@@ -350,10 +372,12 @@ code {
   padding: 22px 18px;
   background: rgba(127, 127, 127, 0.06);
 }
+
 .empty-title {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
+
 .empty-sub {
   margin-top: 6px;
   color: var(--muted);
@@ -368,4 +392,6 @@ code {
   flex-wrap: wrap;
 }
 
-.muted { color: var(--muted); }
+.muted {
+  color: var(--muted);
+}

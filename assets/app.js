@@ -10,6 +10,10 @@
     empty: document.getElementById('empty'),
     resultsCount: document.getElementById('results-count'),
     resultsQuery: document.getElementById('results-query'),
+    editJsonBtn: document.getElementById('edit-json-btn'),
+    jsonEditorModal: document.getElementById('json-editor-modal'),
+    closeEditorBtn: document.getElementById('close-editor-btn'),
+    jedisonContainer: document.getElementById('jedison-container'),
   };
 
   const state = {
@@ -60,33 +64,48 @@
   }
 
   async function boot() {
+    console.log('[Boot] Starting app initialization...');
     wireEvents();
+    console.log('[Boot] Events wired');
 
     setStatus('Loading content…', 'info');
+    console.log('[Boot] Fetching build-info.json...');
     const buildInfo = await fetchOptionalJson('content/build-info.json', {});
     state.buildInfo = buildInfo;
+    console.log('[Boot] Build info loaded:', buildInfo);
     renderBuildInfo(buildInfo);
 
+    console.log('[Boot] Fetching projects.json...');
     const rows = await fetchRequiredJson('content/projects.json');
+    console.log('[Boot] Projects loaded, count:', rows?.length);
 
     setStatus('Initializing SQLite (WASM)…', 'info');
+    console.log('[Boot] Loading SQLite WASM module...');
     const SQL = await initSqlJs({
       locateFile: (file) =>
         `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/${file}`,
     });
+    console.log('[Boot] SQLite module loaded');
     const db = new SQL.Database();
     state.db = db;
+    console.log('[Boot] Database instance created');
 
+    console.log('[Boot] Initializing schema...');
     initSchema(db);
+    console.log('[Boot] Inserting rows...');
     insertRows(db, rows);
     state.allRowsCount = countAll(db);
+    console.log('[Boot] Database ready, total projects:', state.allRowsCount);
 
     state.isReady = true;
     setStatus('Ready. Type to search.', 'success');
+    console.log('[Boot] App fully initialized and ready');
 
     state.query = '';
     state.results = runSearch(db, parseQuery(''));
+    console.log('[Boot] Initial search complete, results:', state.results.length);
     render();
+    console.log('[Boot] Initial render complete');
   }
 
   function wireEvents() {
@@ -104,6 +123,13 @@
       if (state.db) state.results = runSearch(state.db, parseQuery(''));
       els.search.focus();
       render();
+    });
+
+    // JSON Editor modal events
+    els.editJsonBtn.addEventListener('click', openJsonEditor);
+    els.closeEditorBtn.addEventListener('click', closeJsonEditor);
+    els.jsonEditorModal.addEventListener('click', (e) => {
+      if (e.target === els.jsonEditorModal) closeJsonEditor();
     });
 
     document.addEventListener('keydown', (e) => {
@@ -474,6 +500,104 @@
       if (t) window.clearTimeout(t);
       t = window.setTimeout(() => fn.apply(this, args), ms);
     };
+  }
+
+  let jedisonInstance = null;
+
+  async function openJsonEditor() {
+    console.log('[JSON Editor] Edit button clicked');
+    try {
+      // Fetch the projects.json file
+      console.log('[JSON Editor] Fetching content/projects.json...');
+      const response = await fetch('content/projects.json', { cache: 'no-store' });
+      console.log('[JSON Editor] Response status:', response.status, response.ok);
+      if (!response.ok) throw new Error('Failed to load projects.json');
+
+      const data = await response.json();
+      console.log('[JSON Editor] Data loaded, projects count:', data?.length);
+
+      // Clear container
+      els.jedisonContainer.innerHTML = '';
+      console.log('[JSON Editor] Container cleared');
+
+      // Initialize Jedison with the data
+      console.log('[JSON Editor] Initializing Jedison...');
+      jedisonInstance = new Jedison.Create({
+        container: els.jedisonContainer,
+        theme: new Jedison.ThemeBootstrap5(),
+        iconLib: 'bootstrap-icons',
+        btnContents: false,
+        data: data,
+        schema: {
+          type: 'array',
+          title: 'Projects',
+          'x-format': 'nav-vertical',
+          'x-titleTemplate': '{{ value.project }}',
+          items: {
+            type: 'object',
+            title: 'Project',
+            properties: {
+              project: {
+                type: 'string',
+                title: 'Project Name'
+              },
+              dates: {
+                type: 'string',
+                title: 'Dates'
+              },
+              description: {
+                type: 'string',
+                title: 'Description',
+                'x-format': 'textarea'
+              },
+              responsibilities: {
+                type: 'string',
+                title: 'Responsibilities',
+                'x-format': 'textarea'
+              },
+              highlights: {
+                type: 'string',
+                title: 'Highlights',
+                'x-format': 'textarea'
+              },
+              impact: {
+                type: 'string',
+                title: 'Impact',
+                'x-format': 'textarea'
+              },
+              technologies: {
+                type: 'string',
+                title: 'Technologies',
+                'x-format': 'textarea'
+              },
+              skills: {
+                type: 'string',
+                title: 'Skills',
+                'x-format': 'textarea'
+              }
+            }
+          }
+        }
+      });
+      console.log('[JSON Editor] Jedison initialized:', jedisonInstance);
+
+      // Show modal
+      els.jsonEditorModal.style.display = 'block';
+      console.log('[JSON Editor] Modal displayed');
+    } catch (err) {
+      console.error('[JSON Editor] Failed to open JSON editor:', err);
+      alert('Failed to load JSON editor. Check console for details.');
+    }
+  }
+
+  function closeJsonEditor() {
+    console.log('[JSON Editor] Closing editor');
+    els.jsonEditorModal.style.display = 'none';
+    if (jedisonInstance) {
+      els.jedisonContainer.innerHTML = '';
+      jedisonInstance = null;
+      console.log('[JSON Editor] Editor instance cleared');
+    }
   }
 })();
 

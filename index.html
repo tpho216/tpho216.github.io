@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,8 +11,18 @@
 
   <!-- SQLite in the browser (WASM). Loaded from CDN for static hosting. -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/sql-wasm.js"></script>
+
+  <!-- Bootstrap 5 and Icons for Jedison -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Jedison JSON Editor -->
+  <script src="https://cdn.jsdelivr.net/npm/jedison@latest/dist/umd/jedison.umd.js"></script>
+
   <script defer src="assets/app.js"></script>
 </head>
+
 <body>
   <div class="bg"></div>
 
@@ -26,6 +37,9 @@
       </div>
 
       <div class="topbar-right">
+        <button id="edit-json-btn" class="link"
+          style="background:none;border:none;cursor:pointer;font:inherit;color:inherit;">Edit JSON</button>
+        <span class="dot">•</span>
         <a class="link" href="react/" id="react-link">View React version</a>
         <span class="dot">•</span>
         <span id="build-time" class="build-time" title="Build time (UTC)">Last updated: —</span>
@@ -41,19 +55,14 @@
       <div class="search-shell">
         <div class="search-row">
           <span class="search-icon" aria-hidden="true"></span>
-          <input
-            id="global-search"
-            class="search-input"
-            type="search"
-            spellcheck="false"
-            autocomplete="off"
+          <input id="global-search" class="search-input" type="search" spellcheck="false" autocomplete="off"
             placeholder='Try: "react performance", tech:python, skill:leadership, year:2024'
-            aria-label="Search across projects"
-          />
+            aria-label="Search across projects" />
           <button id="clear-search" class="search-clear" type="button" aria-label="Clear search">Clear</button>
         </div>
         <div class="search-hint">
-          <span class="kbd">/</span> focus · <span class="kbd">Esc</span> clear · operators: <code>tech:</code> <code>skill:</code> <code>year:</code>
+          <span class="kbd">/</span> focus · <span class="kbd">Esc</span> clear · operators: <code>tech:</code>
+          <code>skill:</code> <code>year:</code>
         </div>
       </div>
 
@@ -85,9 +94,25 @@
         <span class="muted">This site is static. Content comes from a Google Sheet at deploy time.</span>
       </div>
       <div class="footer-right">
-        <a class="link" href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top</a>
+        <a class="link" href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to
+          top</a>
       </div>
     </footer>
   </div>
+
+  <!-- JSON Editor Modal -->
+  <div id="json-editor-modal"
+    style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:9999;padding:20px;overflow-y:auto;">
+    <div
+      style="max-width:1400px;margin:0 auto;background:var(--bg,#fff);border-radius:8px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,0.3);min-height:calc(100vh - 40px);display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-shrink:0;">
+        <h2 style="margin:0;">Edit projects.json</h2>
+        <button id="close-editor-btn"
+          style="background:none;border:none;font-size:24px;cursor:pointer;padding:0 10px;">×</button>
+      </div>
+      <div id="jedison-container" style="flex:1;overflow-y:auto;"></div>
+    </div>
+  </div>
 </body>
+
 </html>
