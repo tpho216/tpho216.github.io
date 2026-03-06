@@ -1,6 +1,6 @@
 [
   {
-    "project": "SWAMS Community Health Platform (Web + Mobile)",
+    "project": "Aborignal Community Health Platform (Web + Mobile)",
     "description": "Digital platform supporting Aboriginal communities with health information, research data collection, and cross-community communication.",
     "responsibilities": "Build React admin portal and React Native mobile app, integrate existing Firebase backend, establish deployment processes and team development standards.",
     "highlights": "Architected cross-platform solution using modular design patterns, enabling code reuse between web and mobile. Established CI/CD pipeline using Expo EAS for automated testing and deployment.",
@@ -28,5 +28,25 @@
     "skills": "IoT system integration, Cross-platform development, Network programming, Firmware development, Networking configuration, Linux server configuration",
     "impact": "Delivered a functional quantum education platform used for research demonstrations and student learning. Enabled reliable device onboarding, remote system updates, and interactive circuit simulation, supporting the project's transition from research prototype toward commercialisation.",
     "dates": "2021–2022"
+  },
+  {
+    "project": "Civil Design Cost Estimation Web Platform",
+    "description": "Full-stack platform enabling civil design teams to estimate construction costs in real time based on structural designs. The system improves supply chain transparency, reduces inefficiencies in traditional quoting workflows, accelerates design iterations, and helps suppliers forecast demand more accurately.",
+    "responsibilities": "Lead development team across the SDLC lifecycle, collaborate with designers and engineers to define system architecture and database models, implement full-stack application features, establish CI/CD pipelines, manage GitLab repositories and submodules, and work directly with clients to implement complex engineering and business requirements.",
+    "highlights": "Designed scalable TypeScript-based architecture supporting real-time cost calculations and supplier data integration. Implemented automated testing strategy including unit, integration, and end-to-end tests using Jest. Established GitLab CI/CD deployment pipelines and managed containerized deployments on AWS ECS with images stored in ECR. Integrated external services including Google Maps and email notifications via AWS SES while configuring Route53 networking for production infrastructure.",
+    "impact": "Delivered production platform recognized with industry awards and strong client satisfaction. Enabled faster design decision-making through real-time cost visibility, improved supply chain transparency, and supported supplier demand forecasting to reduce procurement inefficiencies.",
+    "technologies": "React, TypeScript, NestJS, AWS ECS, AWS ECR, AWS Route53, AWS SES, Terraform, GitLab CI/CD, Jest, unit tests, integration tests, E2E tests, Git submodules, Google Maps API",
+    "skills": "Full-stack Development, Technical Leadership, System Architecture, DevOps and CI CD, Cloud Infrastructure, Infrastructure as Code (IaC), Automated Testing, Client Collaboration",
+    "dates": "2022-2024"
+  },
+  {
+    "project": "Gamification Training Platform",
+    "description": "Cloud-based gamification and training platform supporting multiplayer and singleplayer simulation scenarios for a highly sensitive and private system.",
+    "technologies": "Azure (VMs, VPN, DNS, Terraform, Entra ID), GitLab Enterprise Edition (self-hosted), OpenVPN, FreeRADIUS, LetsEncrypt, Casdoor, LDAP, HTTPS/SSL, NestJS, Docker, Kubernetes (AKS), Unreal Engine, PostgreSQL, ISM/ISO27001 security compliance",
+    "responsibilities": "Investigate and implement a secure self-hosted GitLab instance on Azure with 2FA, VPN, and SSL; evaluate and document LMS platforms; implement full-stack Training Course Management including courses, scenarios, and user roles; integrate microservices to orchestrate pixel streaming instances; document security architecture and ISM compliance.",
+    "highlights": "Architected a fully private, VPN-gated Azure cloud infrastructure with self-hosted GitLab Enterprise, enforced 2FA, and automated SSL. Drove the strategic pivot from off-the-shelf LMS to a bespoke Training Course Management system, leading UI/UX direction and building it end-to-end at pace. Led ISM/ISO27001 compliance review, delivering a risk assessment that secured stakeholder confidence.",
+    "skills": "Cloud infrastructure (Azure), Secure networking and VPN, Identity and access management, Full-stack development (TCM), Security compliance (ISM/ISO27001), Technical documentation",
+    "impact": "Delivered a secure, production-ready code sharing platform and training course management system that underpinned the end-to-end demo presented to stakeholders. Provided a documented ISM-aligned security posture and service provider registry, increasing client confidence in the platform's security and maintainability.",
+    "dates": "2023–2024"
   }
 ]
