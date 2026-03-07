@@ -31,13 +31,13 @@
   },
   {
     "project": "Quantum Circuit Builder with IoT Mobile Onboarding",
+    "dates": "2021–2022",
     "description": "System enabling students to design and simulate quantum circuits through an interactive web interface connected to a self-hosted quantum simulator, with mobile-based device onboarding and remote device management.",
-    "technologies": "React, TypeScript, Python, Flask, REST API, Raspberry Pi, Ubuntu Linux, Docker, Mobile Wi-Fi APIs (Android/iOS), WLAN, IoT, OTA updates",
     "responsibilities": "Develop cross-platform mobile application to onboard Raspberry Pi simulator devices via Wi-Fi hotspot workflow, implement Flask-based REST API exposing quantum simulator functionality, build interactive web application for constructing and simulating quantum circuits, integrate mobile, web, and backend components, and implement firmware programming for onboarding indicators and WLAN module configuration.",
     "highlights": "Delivered an end-to-end architecture connecting mobile onboarding, web-based circuit design, and integrated quantum simulation. Implemented secure device onboarding workflow using Wi-Fi hotspot networking, translated visual quantum circuits into simulator-compatible inputs, and programmed Raspberry Pi peripherals for user feedback during device setup. Introduced Docker-based over-the-air update capability enabling remote device software updates and maintenance.",
-    "skills": "IoT system integration, Cross-platform development, Network programming, Firmware development, Networking configuration, Linux server configuration",
     "impact": "Delivered a functional quantum education platform used for research demonstrations and student learning. Enabled reliable device onboarding, remote system updates, and interactive circuit simulation, supporting the project's transition from research prototype toward commercialisation.",
-    "dates": "2021–2022"
+    "technologies": "React, TypeScript, Python, Flask, REST API, Raspberry Pi, Ubuntu Linux, Docker, Mobile Wi-Fi APIs (Android/iOS), WLAN, IoT, OTA updates, C++, C#, Xamarin",
+    "skills": "IoT System Integration, Cross-platform Mobile Development, Network Programming, Firmware Development, Networking Configuration, Linux Server Configuration"
   },
   {
     "project": "Civil Design Cost Estimation Web Platform",
@@ -56,7 +56,7 @@
     "responsibilities": "Architect a full-stack infrastructure spanning a CMS-driven public website and authenticated messaging system. Implement engineer solution to integrate off-the-shelves CMS (Storyblok) for specilised content workflow. Collaborate with UX designers to implement complex interactive behaviours and content structures. Deploy and manage production infrastructure on cloud platforms, ensuring reliability and scalability.",
     "highlights": "Reduced messaging infrastructure costs by designing a serverless real-time chat system using AWS API Gateway WebSockets and Lambda, eliminating idle server expenses while scaling automatically on demand. Implemented a localisation workflow integrating Storyblok content modelling with i18n tooling to automate multilingual publishing, reducing manual translation workload and service costs. Engineered a dynamic React quiz framework driven by Storyblok JSON schemas and routing logic, enabling interactive quiz pop-ups and adaptive content flows directly from CMS configuration beyond typical agency CMS capabilities.",
     "impact": "Delivered a stable production system operating continuously for three years with minimal operational intervention. The decoupled CMS architecture enabled the organisation to manage content updates independently while protecting safety-critical behaviours. Reduced developer dependency by approximately 80%, allowing maintenance budgets to shift toward new features rather than bug fixes and sustaining a long-term engagement through ongoing platform improvements.",
-    "technologies": "Next.js, React, Storyblok, Node.js, PostgreSQL, AWS ECS Fargate, AWS Lambda, AWS API Gateway WebSocket, AWS Route53, AWS CloudWatch, Docker, Terraform, JWT, bcrypt, reCAPTCHA, Formik, Yup, React Context API, AWS SES, SMTP, DKIM, SSL, OAuth2",
+    "technologies": "Next.js, React, Storyblok, Node.js, PostgreSQL, AWS ECS Fargate, AWS Lambda, AWS API Gateway WebSocket, AWS Route53, AWS CloudWatch, Docker, Terraform, JWT, bcrypt, reCAPTCHA, Formik, Yup, React Context API, AWS SES, SMTP, DKIM, SSL, OAuth2, Figma",
     "skills": "Full-stack architecture, Cloud Infrastructure Design, Infrastructure-as-Code, Real-time Messaging System, PostgreSQL schema design, OAuth2 integration, CMS architecture, Docker deployment, Safety and Privacy-Focused UX implementation, Improving Email Deliverability, Responsive Website, UX-driven Development."
   },
   {
@@ -71,12 +71,12 @@
   },
   {
     "project": "Research Content Management Platform",
-    "dates": "2025-2026",
+    "dates": "2025 - Present ",
     "description": "A UX-driven research publishing platform for a research organisation to deliver accessible, structured knowledge content and multimedia resources to public audiences.",
     "responsibilities": "Own the investigation, evaluation, and implementation of the platform solution design. Configure cloud hosting environments and system access, including security and performance optimisations. Produce technical documentation for platform usage and administration and support transition for seamless on-premise technical handover.",
     "highlights": "Validated the platform for collaborative publishing workflows involving multiple content creators and editors with distinct privileges. Implemented bespoke theme extensions and tailored functionality to satisfy specialised feature requests. Ensured the platform satisfied usability, accessibility and r responsiveness testing requirements prior to release. Established development practices aligned with widely adopted platform conventions to support maintainability and safe upgrades. Prepared the system for operational handover to the client’s internal IT personnel and supported knowledge transfer.",
     "impact": "Successful delivery strengthened organisational trust and contributed to continued collaboration and positive remarks from customers over correspondents.",
-    "technologies": "WordPress, Elementor, AWS EC2, AWS SES, AWS EBS, AWS WAF, AWS RDS, Figma, Terraform, WP Grid Builder, MySQL, PHP, AJAX, Javascript, CSS, HTML",
+    "technologies": "WordPress, Elementor, AWS EC2, AWS SES, AWS EBS, AWS WAF, AWS RDS, Figma, Terraform, WP Grid Builder, MySQL, PHP, AJAX, Javascript, CSS, HTML, Passwordless Login, SSO integration",
     "skills": "CMS Development, Custom WordPress Theme Development, Cloud Deployment, Technical documentation, Responsive Website, UX-driven Development, Full-stack Development"
   },
   {
@@ -98,5 +98,15 @@
     "impact": "Enabled reliable device calibration workflows and telemetry visibility required for operational deployment and stakeholder demonstrations of the environmental monitoring platform.",
     "technologies": ".NET, MvvmCross, Azure IoT Hub, Azure Event Hub, Azure Functions, iOS, Xamarin, C#",
     "skills": "IoT System Integration, Cross-Platform Mobile Application Design, Telemetry Data Modelling, Asynchronous Realtime System"
+  },
+  {
+    "project": "Genetic Health Community Support Platform",
+    "dates": "Feb 2026 - Present",
+    "description": "A multi-platform (SPA & cross-platform application) to support parents of children with genetic conditions and internal staff responsible for curating and reviewing guidance content.",
+    "responsibilities": "Own end-to-end development from Figma mock-ups to MVP and delivery. Lead in mobile, web solution design and cloud infrastructure direction.",
+    "highlights": "Drive data model relationship creation while managing communication channel with client. Utilise AI Assistant such as Claude and Chat GPT to orchestrate full-stack agents to build well-rounded requirements specifications with project coming close to completion within unprecedented accelerated timelines (Reducing at least 3 months of coding tasks). Applying secure & best software practices while handling the nuance of AI codes to meet professional standards.",
+    "impact": "Improved stakeholder confidence during milestone reviews, shortened internal content turnaround, strengthened trust in published information, and increased release readiness across the programme.",
+    "technologies": "Figma, Figma Make, Expo, React Native, Expo Router, NestJS, TypeScript, PostgreSQL, Prisma, TanStack Query, Tanstack Forms, Axios, JWT, Swagger, Docker, AWS SES, Zustand, AWS, Elastic Beanstalk, RDS, SES, GitLab CI/CD, Progressive Web App (PWA)",
+    "skills": "Product Delivery Pipeline, API design, Data Modelling, Dev/Staging/Production Releases Workflow, UX Refinement, Moderation Workflow, Test Planning, User-friendly Design, Cross-platform development, Responsive Design"
   }
 ]
