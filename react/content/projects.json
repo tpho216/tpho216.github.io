@@ -1,33 +1,33 @@
 [
   {
     "project": "Gamification Training Platform",
+    "dates": "2023–2024",
     "description": "Cloud-based gamification and training platform supporting multiplayer and singleplayer simulation scenarios for a highly sensitive and private system.",
-    "technologies": "Azure (VMs, VPN, DNS, Terraform, Entra ID), GitLab Enterprise Edition (self-hosted), OpenVPN, FreeRADIUS, LetsEncrypt, Casdoor, LDAP, HTTPS/SSL, NestJS, Docker, Kubernetes (AKS), Unreal Engine, PostgreSQL, ISM/ISO27001 security compliance",
     "responsibilities": "Investigate and implement a secure self-hosted GitLab instance on Azure with 2FA, VPN, and SSL; evaluate and document LMS platforms; implement full-stack Training Course Management including courses, scenarios, and user roles; integrate microservices to orchestrate pixel streaming instances; document security architecture and ISM compliance.",
     "highlights": "Architected a fully private, VPN-gated Azure cloud infrastructure with self-hosted GitLab Enterprise, enforced 2FA, and automated SSL. Drove the strategic pivot from off-the-shelf LMS to a bespoke Training Course Management system, leading UI/UX direction and building it end-to-end at pace. Led ISM/ISO27001 compliance review, delivering a risk assessment that secured stakeholder confidence.",
-    "skills": "Cloud infrastructure (Azure), Secure networking and VPN, Identity and access management, Full-stack development (TCM), Security compliance (ISM/ISO27001), Technical documentation",
     "impact": "Delivered a secure, production-ready code sharing platform and training course management system that underpinned the end-to-end demo presented to stakeholders. Provided a documented ISM-aligned security posture and service provider registry, increasing client confidence in the platform's security and maintainability.",
-    "dates": "2023–2024"
+    "technologies": "Azure (VMs, VPN, DNS, Terraform, Entra ID), GitLab Enterprise Edition (self-hosted), OpenVPN, FreeRADIUS, LetsEncrypt, Casdoor, LDAP, HTTPS/SSL, NestJS, Docker, Kubernetes (AKS), Unreal Engine, PostgreSQL, ISM/ISO27001 security compliance",
+    "skills": "Cloud infrastructure, Secure networking and VPN, Identity and access management, Full-stack development, Security compliance (ISM/ISO27001), Technical documentation"
   },
   {
     "project": "Aborignal Community Health Platform (Web + Mobile)",
+    "dates": "2020–2022",
     "description": "Digital platform supporting Aboriginal communities with health information, research data collection, and cross-community communication.",
     "responsibilities": "Build React admin portal and React Native mobile app, integrate existing Firebase backend, establish deployment processes and team development standards.",
     "highlights": "Architected cross-platform solution using modular design patterns, enabling code reuse between web and mobile. Established CI/CD pipeline using Expo EAS for automated testing and deployment.",
     "impact": "Delivered platform serving 5 Aboriginal communities, facilitating health research data collection and improving community engagement.",
     "technologies": "React, React Native (Expo), TypeScript, Firebase Functions, Firestore, Firebase Auth, Firebase Messaging, Redux, modern React patterns (Context API, hooks)",
-    "skills": "Full-stack development, Mobile Application Development, Serverless Architecture, Scalable Frontend Design, Team Technical Leadership",
-    "dates": "2020–2022"
+    "skills": "Full-stack development, Mobile Application Development, Serverless Architecture, Scalable Frontend Design, Team Technical Leadership, Full-stack Development"
   },
   {
     "project": "Structural & Catalogue Management Platform",
+    "dates": "2024–2025",
     "description": "Online desktop platform supporting complex structural calculations, workflow validation, catalogue management, JSON Schema–validated templates, and admin portal functionality for civil engineering operations.",
-    "technologies": "NestJS, MikroORM, PostgreSQL (secure), JWT (Passport), Swagger, Jest, TypeScript, React (admin portal), SQLite (testing), JSON Schema, AWS ECS, S3, CloudFront, ECR, ALB, secure private subnets, networking, CI/CD, unit tests, E2E tests, database migrations",
     "responsibilities": "Drive project discovery and scope alignment, define backend architecture and data models, implement authentication and CRUD APIs, support admin portal development, document structural modelling decisions, define and enforce JSON Schema validations for catalogue and template data, and seed test/real databases.",
-    "highlights": "Bridged domain requirements with engineering delivery, designed modular backend architecture, and implemented secure AWS infrastructure including ECS, S3, CloudFront, ECR, ALB, and private subnets. Captured complex structural logic (bracing nodes, base plates, ULS/SLS formulas), implemented scalable ERD and functional modules, and established CI/CD with unit and E2E tests. Leveraged JSON Schema to enforce validation and generate dynamic catalogue/templates, reducing repetitive frontend coding, ensuring consistent data, and simplifying future maintenance.",
-    "skills": "Backend architecture design, Cloud infrastructure engineering, API design, Database modelling, DevOps and CI/CD pipelines, Test-driven development",
+    "highlights": "Bridged domain requirements with engineering delivery, designed modular backend architecture, and implemented secure AWS infrastructure. Captured complex structural logic (bracing nodes, base plates, ULS/SLS formulas), implemented scalable ERD and functional modules, and established CI/CD with unit and E2E tests. Leveraged JSON Schema to enforce validation and generate dynamic catalogue/templates, reducing repetitive frontend coding, ensuring consistent data, and simplifying future maintenance.",
     "impact": "Delivered a production-ready platform currently used in civil engineering operations, enabling reliable catalogue and bracing management workflows with validated templates. Supported secure database deployment, API stability, and production-ready admin portal, contributing to client confidence, operational continuity, and reduced development overhead.",
-    "dates": "2024–2025"
+    "technologies": "NestJS, MikroORM, PostgreSQL, JWT, Swagger, Jest, TypeScript, React, Tanstack, SQLite, JSON Schema, AWS ECS, S3, CloudFront, ECR, ALB, CI/CD, unit tests, E2E tests, Virtual Private Cloud",
+    "skills": "Backend Architecture Design, Cloud Infrastructure Engineering, API design, Database Modelling, DevOps and CI/CD pipelines, Test-driven Development, Secure Cloud Network Design, Full-stack Development"
   },
   {
     "project": "Quantum Circuit Builder with IoT Mobile Onboarding",
@@ -41,13 +41,13 @@
   },
   {
     "project": "Civil Design Cost Estimation Web Platform",
+    "dates": "2022, 2024",
     "description": "Full-stack platform enabling civil design teams to estimate construction costs in real time based on structural designs. The system improves supply chain transparency, reduces inefficiencies in traditional quoting workflows, accelerates design iterations, and helps suppliers forecast demand more accurately.",
     "responsibilities": "Lead development team across the SDLC lifecycle, collaborate with designers and engineers to define system architecture and database models, implement full-stack application features, establish CI/CD pipelines, manage GitLab repositories and submodules, and work directly with clients to implement complex engineering and business requirements.",
     "highlights": "Designed scalable TypeScript-based architecture supporting real-time cost calculations and supplier data integration. Implemented automated testing strategy including unit, integration, and end-to-end tests using Jest. Established GitLab CI/CD deployment pipelines and managed containerized deployments on AWS ECS with images stored in ECR. Integrated external services including Google Maps and email notifications via AWS SES while configuring Route53 networking for production infrastructure.",
     "impact": "Delivered production platform recognized with industry awards and strong client satisfaction result in repeat engagements for project expansion & refererals with new clients.",
     "technologies": "React, TypeScript, NestJS, AWS ECS, AWS ECR, AWS Route53, AWS SES, Terraform, GitLab CI/CD, Jest, unit tests, integration tests, E2E tests, Git submodules, Google Maps API",
-    "skills": "Full-stack Development, Technical Leadership, System Architecture, DevOps and CI CD, Cloud Infrastructure, Infrastructure as Code (IaC), Automated Testing, Client Collaboration",
-    "dates": "2022, 2024"
+    "skills": "Full-stack Development, Technical Leadership, System Architecture, DevOps and CI CD, Cloud Infrastructure, Infrastructure as Code (IaC), Automated Testing"
   },
   {
     "project": "Anti Slavery Australia – My Blue Sky Website & Messaging System",
@@ -57,7 +57,7 @@
     "highlights": "Reduced messaging infrastructure costs by designing a serverless real-time chat system using AWS API Gateway WebSockets and Lambda, eliminating idle server expenses while scaling automatically on demand. Implemented a localisation workflow integrating Storyblok content modelling with i18n tooling to automate multilingual publishing, reducing manual translation workload and service costs. Engineered a dynamic React quiz framework driven by Storyblok JSON schemas and routing logic, enabling interactive quiz pop-ups and adaptive content flows directly from CMS configuration beyond typical agency CMS capabilities.",
     "impact": "Delivered a stable production system operating continuously for three years with minimal operational intervention. The decoupled CMS architecture enabled the organisation to manage content updates independently while protecting safety-critical behaviours. Reduced developer dependency by approximately 80%, allowing maintenance budgets to shift toward new features rather than bug fixes and sustaining a long-term engagement through ongoing platform improvements.",
     "technologies": "Next.js, React, Storyblok, Node.js, PostgreSQL, AWS ECS Fargate, AWS Lambda, AWS API Gateway WebSocket, AWS Route53, AWS CloudWatch, Docker, Terraform, JWT, bcrypt, reCAPTCHA, Formik, Yup, React Context API, AWS SES, SMTP, DKIM, SSL, OAuth2",
-    "skills": "Full-stack architecture, Cloud Infrastructure Design, Infrastructure-as-Code, Real-time Messaging System, PostgreSQL schema design, OAuth2 integration, CMS architecture, Docker deployment, security-focused UX implementation, Improving Email Deliverability"
+    "skills": "Full-stack architecture, Cloud Infrastructure Design, Infrastructure-as-Code, Real-time Messaging System, PostgreSQL schema design, OAuth2 integration, CMS architecture, Docker deployment, Safety and Privacy-Focused UX implementation, Improving Email Deliverability, Responsive Website, UX-driven Development."
   },
   {
     "project": "Enterprise Network Proxy",
@@ -68,5 +68,35 @@
     "impact": "The system ran reliably in enterprise-level production environment, fostering ongoing client engagement and repeat project opportunities\n",
     "technologies": "RPM, SPEC files, RHEL, AlmaLinux, Docker, EC2, systemd, SSH, PostgreSQL, Bash scripting, LDAP",
     "skills": "DevOps, Deployment Engineering, Linux Systems, Automation"
+  },
+  {
+    "project": "Research Content Management Platform",
+    "dates": "2025-2026",
+    "description": "A UX-driven research publishing platform for a research organisation to deliver accessible, structured knowledge content and multimedia resources to public audiences.",
+    "responsibilities": "Own the investigation, evaluation, and implementation of the platform solution design. Configure cloud hosting environments and system access, including security and performance optimisations. Produce technical documentation for platform usage and administration and support transition for seamless on-premise technical handover.",
+    "highlights": "Validated the platform for collaborative publishing workflows involving multiple content creators and editors with distinct privileges. Implemented bespoke theme extensions and tailored functionality to satisfy specialised feature requests. Ensured the platform satisfied usability, accessibility and r responsiveness testing requirements prior to release. Established development practices aligned with widely adopted platform conventions to support maintainability and safe upgrades. Prepared the system for operational handover to the client’s internal IT personnel and supported knowledge transfer.",
+    "impact": "Successful delivery strengthened organisational trust and contributed to continued collaboration and positive remarks from customers over correspondents.",
+    "technologies": "WordPress, Elementor, AWS EC2, AWS SES, AWS EBS, AWS WAF, AWS RDS, Figma, Terraform, WP Grid Builder, MySQL, PHP, AJAX, Javascript, CSS, HTML",
+    "skills": "CMS Development, Custom WordPress Theme Development, Cloud Deployment, Technical documentation, Responsive Website, UX-driven Development, Full-stack Development"
+  },
+  {
+    "project": "Maritime Route Planning and Risk Analysis Platform",
+    "dates": "Feb 2024 – May 2024",
+    "description": "A decision-support platform for analysing maritime routes, navigational risks, and operational scenarios across global shipping corridors.",
+    "responsibilities": "Lead application frontend architecture and design, define the backend service architecture and API structure for route computation workflows, integrate research existing algorithm interfaces , review code contributions and maintain repository quality, prepare demonstration builds for stakeholder reviews, and deliver isolated containerised solution.",
+    "highlights": "Played a key role in coordinating and defining an API contract supporting route generation, statistics retrieval, and job-based processing workflows; implemented a mechanism to dynamically create and track route computation jobs; resolved geospatial dateline wrapping issues affecting global map rendering; devised schema interfaces enabling flexible ingestion of route and statistics data structure. ",
+    "impact": "Exceeded stakeholder expectations under tight delivery timelines, strengthening client relationships and contributing to new project opportunities (worth >1M dollars) and ongoing client ownership of the system.",
+    "technologies": "Python, FastAPI, C++, Boost, Beast, WebSocket, React, TypeScript, Vite,  Docker, AWS EC2, Git, Deck GL, Mapbox GL, Python, FastAPI, Disktra Algorithms, Tanstack",
+    "skills": "Backend System Architecture, API, Distributed System Integration, Geospatial Data Processing, Full-stack Development, Research Algorithm Integration, "
+  },
+  {
+    "project": "Ocean Cleaning Management & Telemetry Platform",
+    "dates": "Apr 2021 – Jun 2021",
+    "description": "Singe Page App Administration & Mobile Application interface enabling field operators to calibrate and interact with ocean-cleaning IoT devices used by Seabin for environmental monitoring.",
+    "responsibilities": "Design application architecture for the IoT mobile feature, define data models and view models, implement navigation structure, build calibration user flows, and implement services for communication between the mobile application and device telemetry infrastructure.",
+    "highlights": "Designed the interaction model for multi-step sensor calibration with progressive UI states; architected telemetry handling to support multiple sensor data types; implemented asynchronous connection state handling and connection lifecycle management; created timer-based telemetry synchronization to prevent excessive event consumption; coordinated endpoint structure for device telemetry streams and command messaging.",
+    "impact": "Enabled reliable device calibration workflows and telemetry visibility required for operational deployment and stakeholder demonstrations of the environmental monitoring platform.",
+    "technologies": ".NET, MvvmCross, Azure IoT Hub, Azure Event Hub, Azure Functions, iOS, Xamarin, C#",
+    "skills": "IoT System Integration, Cross-Platform Mobile Application Design, Telemetry Data Modelling, Asynchronous Realtime System"
   }
 ]
