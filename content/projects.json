@@ -1,52 +1,72 @@
 [
-    {
-        "project": "Aborignal Community Health Platform (Web + Mobile)",
-        "description": "Digital platform supporting Aboriginal communities with health information, research data collection, and cross-community communication.",
-        "responsibilities": "Build React admin portal and React Native mobile app, integrate existing Firebase backend, establish deployment processes and team development standards.",
-        "highlights": "Architected cross-platform solution using modular design patterns, enabling code reuse between web and mobile. Established CI/CD pipeline using Expo EAS for automated testing and deployment.",
-        "impact": "Delivered platform serving 5 Aboriginal communities, facilitating health research data collection and improving community engagement.",
-        "technologies": "React, React Native (Expo), TypeScript, Firebase Functions, Firestore, Firebase Auth, Firebase Messaging, Redux, modern React patterns (Context API, hooks)",
-        "skills": "Full-stack development, Mobile Application Development, Serverless Architecture, Scalable Frontend Design, Team Technical Leadership",
-        "dates": "2020–2022"
-    },
-    {
-        "project": "Structural & Catalogue Management Platform",
-        "description": "Online desktop platform supporting complex structural calculations, workflow validation, catalogue management, JSON Schema–validated templates, and admin portal functionality for civil engineering operations.",
-        "technologies": "NestJS, MikroORM, PostgreSQL (secure), JWT (Passport), Swagger, Jest, TypeScript, React (admin portal), SQLite (testing), JSON Schema, AWS ECS, S3, CloudFront, ECR, ALB, secure private subnets, networking, CI/CD, unit tests, E2E tests, database migrations",
-        "responsibilities": "Drive project discovery and scope alignment, define backend architecture and data models, implement authentication and CRUD APIs, support admin portal development, document structural modelling decisions, define and enforce JSON Schema validations for catalogue and template data, and seed test/real databases.",
-        "highlights": "Bridged domain requirements with engineering delivery, designed modular backend architecture, and implemented secure AWS infrastructure including ECS, S3, CloudFront, ECR, ALB, and private subnets. Captured complex structural logic (bracing nodes, base plates, ULS/SLS formulas), implemented scalable ERD and functional modules, and established CI/CD with unit and E2E tests. Leveraged JSON Schema to enforce validation and generate dynamic catalogue/templates, reducing repetitive frontend coding, ensuring consistent data, and simplifying future maintenance.",
-        "skills": "Backend architecture design, Cloud infrastructure engineering, API design, Database modelling, DevOps and CI/CD pipelines, Test-driven development",
-        "impact": "Delivered a production-ready platform currently used in civil engineering operations, enabling reliable catalogue and bracing management workflows with validated templates. Supported secure database deployment, API stability, and production-ready admin portal, contributing to client confidence, operational continuity, and reduced development overhead.",
-        "dates": "2024–2025"
-    },
-    {
-        "project": "Quantum Circuit Builder with IoT Mobile Onboarding",
-        "description": "System enabling students to design and simulate quantum circuits through an interactive web interface connected to a self-hosted quantum simulator, with mobile-based device onboarding and remote device management.",
-        "technologies": "React, TypeScript, Python, Flask, REST API, Raspberry Pi, Ubuntu Linux, Docker, Mobile Wi-Fi APIs (Android/iOS), WLAN, IoT, OTA updates",
-        "responsibilities": "Develop cross-platform mobile application to onboard Raspberry Pi simulator devices via Wi-Fi hotspot workflow, implement Flask-based REST API exposing quantum simulator functionality, build interactive web application for constructing and simulating quantum circuits, integrate mobile, web, and backend components, and implement firmware programming for onboarding indicators and WLAN module configuration.",
-        "highlights": "Delivered an end-to-end architecture connecting mobile onboarding, web-based circuit design, and integrated quantum simulation. Implemented secure device onboarding workflow using Wi-Fi hotspot networking, translated visual quantum circuits into simulator-compatible inputs, and programmed Raspberry Pi peripherals for user feedback during device setup. Introduced Docker-based over-the-air update capability enabling remote device software updates and maintenance.",
-        "skills": "IoT system integration, Cross-platform development, Network programming, Firmware development, Networking configuration, Linux server configuration",
-        "impact": "Delivered a functional quantum education platform used for research demonstrations and student learning. Enabled reliable device onboarding, remote system updates, and interactive circuit simulation, supporting the project's transition from research prototype toward commercialisation.",
-        "dates": "2021–2022"
-    },
-    {
-        "project": "Civil Design Cost Estimation Web Platform",
-        "description": "Full-stack platform enabling civil design teams to estimate construction costs in real time based on structural designs. The system improves supply chain transparency, reduces inefficiencies in traditional quoting workflows, accelerates design iterations, and helps suppliers forecast demand more accurately.",
-        "responsibilities": "Lead development team across the SDLC lifecycle, collaborate with designers and engineers to define system architecture and database models, implement full-stack application features, establish CI/CD pipelines, manage GitLab repositories and submodules, and work directly with clients to implement complex engineering and business requirements.",
-        "highlights": "Designed scalable TypeScript-based architecture supporting real-time cost calculations and supplier data integration. Implemented automated testing strategy including unit, integration, and end-to-end tests using Jest. Established GitLab CI/CD deployment pipelines and managed containerized deployments on AWS ECS with images stored in ECR. Integrated external services including Google Maps and email notifications via AWS SES while configuring Route53 networking for production infrastructure.",
-        "impact": "Delivered production platform recognized with industry awards and strong client satisfaction result in repeat engagements for project expansion & refererals with new clients.",
-        "technologies": "React, TypeScript, NestJS, AWS ECS, AWS ECR, AWS Route53, AWS SES, Terraform, GitLab CI/CD, Jest, unit tests, integration tests, E2E tests, Git submodules, Google Maps API",
-        "skills": "Full-stack Development, Technical Leadership, System Architecture, DevOps and CI CD, Cloud Infrastructure, Infrastructure as Code (IaC), Automated Testing, Client Collaboration",
-        "dates": "2022, 2024"
-    },
-    {
-        "project": "Gamification Training Platform",
-        "description": "Cloud-based gamification and training platform supporting multiplayer and singleplayer simulation scenarios for a highly sensitive and private system.",
-        "technologies": "Azure (VMs, VPN, DNS, Terraform, Entra ID), GitLab Enterprise Edition (self-hosted), OpenVPN, FreeRADIUS, LetsEncrypt, Casdoor, LDAP, HTTPS/SSL, NestJS, Docker, Kubernetes (AKS), Unreal Engine, PostgreSQL, ISM/ISO27001 security compliance",
-        "responsibilities": "Investigate and implement a secure self-hosted GitLab instance on Azure with 2FA, VPN, and SSL; evaluate and document LMS platforms; implement full-stack Training Course Management including courses, scenarios, and user roles; integrate microservices to orchestrate pixel streaming instances; document security architecture and ISM compliance.",
-        "highlights": "Architected a fully private, VPN-gated Azure cloud infrastructure with self-hosted GitLab Enterprise, enforced 2FA, and automated SSL. Drove the strategic pivot from off-the-shelf LMS to a bespoke Training Course Management system, leading UI/UX direction and building it end-to-end at pace. Led ISM/ISO27001 compliance review, delivering a risk assessment that secured stakeholder confidence.",
-        "skills": "Cloud infrastructure (Azure), Secure networking and VPN, Identity and access management, Full-stack development (TCM), Security compliance (ISM/ISO27001), Technical documentation",
-        "impact": "Delivered a secure, production-ready code sharing platform and training course management system that underpinned the end-to-end demo presented to stakeholders. Provided a documented ISM-aligned security posture and service provider registry, increasing client confidence in the platform's security and maintainability.",
-        "dates": "2023–2024"
-    }
+  {
+    "project": "Gamification Training Platform",
+    "description": "Cloud-based gamification and training platform supporting multiplayer and singleplayer simulation scenarios for a highly sensitive and private system.",
+    "technologies": "Azure (VMs, VPN, DNS, Terraform, Entra ID), GitLab Enterprise Edition (self-hosted), OpenVPN, FreeRADIUS, LetsEncrypt, Casdoor, LDAP, HTTPS/SSL, NestJS, Docker, Kubernetes (AKS), Unreal Engine, PostgreSQL, ISM/ISO27001 security compliance",
+    "responsibilities": "Investigate and implement a secure self-hosted GitLab instance on Azure with 2FA, VPN, and SSL; evaluate and document LMS platforms; implement full-stack Training Course Management including courses, scenarios, and user roles; integrate microservices to orchestrate pixel streaming instances; document security architecture and ISM compliance.",
+    "highlights": "Architected a fully private, VPN-gated Azure cloud infrastructure with self-hosted GitLab Enterprise, enforced 2FA, and automated SSL. Drove the strategic pivot from off-the-shelf LMS to a bespoke Training Course Management system, leading UI/UX direction and building it end-to-end at pace. Led ISM/ISO27001 compliance review, delivering a risk assessment that secured stakeholder confidence.",
+    "skills": "Cloud infrastructure (Azure), Secure networking and VPN, Identity and access management, Full-stack development (TCM), Security compliance (ISM/ISO27001), Technical documentation",
+    "impact": "Delivered a secure, production-ready code sharing platform and training course management system that underpinned the end-to-end demo presented to stakeholders. Provided a documented ISM-aligned security posture and service provider registry, increasing client confidence in the platform's security and maintainability.",
+    "dates": "2023–2024"
+  },
+  {
+    "project": "Aborignal Community Health Platform (Web + Mobile)",
+    "description": "Digital platform supporting Aboriginal communities with health information, research data collection, and cross-community communication.",
+    "responsibilities": "Build React admin portal and React Native mobile app, integrate existing Firebase backend, establish deployment processes and team development standards.",
+    "highlights": "Architected cross-platform solution using modular design patterns, enabling code reuse between web and mobile. Established CI/CD pipeline using Expo EAS for automated testing and deployment.",
+    "impact": "Delivered platform serving 5 Aboriginal communities, facilitating health research data collection and improving community engagement.",
+    "technologies": "React, React Native (Expo), TypeScript, Firebase Functions, Firestore, Firebase Auth, Firebase Messaging, Redux, modern React patterns (Context API, hooks)",
+    "skills": "Full-stack development, Mobile Application Development, Serverless Architecture, Scalable Frontend Design, Team Technical Leadership",
+    "dates": "2020–2022"
+  },
+  {
+    "project": "Structural & Catalogue Management Platform",
+    "description": "Online desktop platform supporting complex structural calculations, workflow validation, catalogue management, JSON Schema–validated templates, and admin portal functionality for civil engineering operations.",
+    "technologies": "NestJS, MikroORM, PostgreSQL (secure), JWT (Passport), Swagger, Jest, TypeScript, React (admin portal), SQLite (testing), JSON Schema, AWS ECS, S3, CloudFront, ECR, ALB, secure private subnets, networking, CI/CD, unit tests, E2E tests, database migrations",
+    "responsibilities": "Drive project discovery and scope alignment, define backend architecture and data models, implement authentication and CRUD APIs, support admin portal development, document structural modelling decisions, define and enforce JSON Schema validations for catalogue and template data, and seed test/real databases.",
+    "highlights": "Bridged domain requirements with engineering delivery, designed modular backend architecture, and implemented secure AWS infrastructure including ECS, S3, CloudFront, ECR, ALB, and private subnets. Captured complex structural logic (bracing nodes, base plates, ULS/SLS formulas), implemented scalable ERD and functional modules, and established CI/CD with unit and E2E tests. Leveraged JSON Schema to enforce validation and generate dynamic catalogue/templates, reducing repetitive frontend coding, ensuring consistent data, and simplifying future maintenance.",
+    "skills": "Backend architecture design, Cloud infrastructure engineering, API design, Database modelling, DevOps and CI/CD pipelines, Test-driven development",
+    "impact": "Delivered a production-ready platform currently used in civil engineering operations, enabling reliable catalogue and bracing management workflows with validated templates. Supported secure database deployment, API stability, and production-ready admin portal, contributing to client confidence, operational continuity, and reduced development overhead.",
+    "dates": "2024–2025"
+  },
+  {
+    "project": "Quantum Circuit Builder with IoT Mobile Onboarding",
+    "description": "System enabling students to design and simulate quantum circuits through an interactive web interface connected to a self-hosted quantum simulator, with mobile-based device onboarding and remote device management.",
+    "technologies": "React, TypeScript, Python, Flask, REST API, Raspberry Pi, Ubuntu Linux, Docker, Mobile Wi-Fi APIs (Android/iOS), WLAN, IoT, OTA updates",
+    "responsibilities": "Develop cross-platform mobile application to onboard Raspberry Pi simulator devices via Wi-Fi hotspot workflow, implement Flask-based REST API exposing quantum simulator functionality, build interactive web application for constructing and simulating quantum circuits, integrate mobile, web, and backend components, and implement firmware programming for onboarding indicators and WLAN module configuration.",
+    "highlights": "Delivered an end-to-end architecture connecting mobile onboarding, web-based circuit design, and integrated quantum simulation. Implemented secure device onboarding workflow using Wi-Fi hotspot networking, translated visual quantum circuits into simulator-compatible inputs, and programmed Raspberry Pi peripherals for user feedback during device setup. Introduced Docker-based over-the-air update capability enabling remote device software updates and maintenance.",
+    "skills": "IoT system integration, Cross-platform development, Network programming, Firmware development, Networking configuration, Linux server configuration",
+    "impact": "Delivered a functional quantum education platform used for research demonstrations and student learning. Enabled reliable device onboarding, remote system updates, and interactive circuit simulation, supporting the project's transition from research prototype toward commercialisation.",
+    "dates": "2021–2022"
+  },
+  {
+    "project": "Civil Design Cost Estimation Web Platform",
+    "description": "Full-stack platform enabling civil design teams to estimate construction costs in real time based on structural designs. The system improves supply chain transparency, reduces inefficiencies in traditional quoting workflows, accelerates design iterations, and helps suppliers forecast demand more accurately.",
+    "responsibilities": "Lead development team across the SDLC lifecycle, collaborate with designers and engineers to define system architecture and database models, implement full-stack application features, establish CI/CD pipelines, manage GitLab repositories and submodules, and work directly with clients to implement complex engineering and business requirements.",
+    "highlights": "Designed scalable TypeScript-based architecture supporting real-time cost calculations and supplier data integration. Implemented automated testing strategy including unit, integration, and end-to-end tests using Jest. Established GitLab CI/CD deployment pipelines and managed containerized deployments on AWS ECS with images stored in ECR. Integrated external services including Google Maps and email notifications via AWS SES while configuring Route53 networking for production infrastructure.",
+    "impact": "Delivered production platform recognized with industry awards and strong client satisfaction result in repeat engagements for project expansion & refererals with new clients.",
+    "technologies": "React, TypeScript, NestJS, AWS ECS, AWS ECR, AWS Route53, AWS SES, Terraform, GitLab CI/CD, Jest, unit tests, integration tests, E2E tests, Git submodules, Google Maps API",
+    "skills": "Full-stack Development, Technical Leadership, System Architecture, DevOps and CI CD, Cloud Infrastructure, Infrastructure as Code (IaC), Automated Testing, Client Collaboration",
+    "dates": "2022, 2024"
+  },
+  {
+    "project": "Anti Slavery Australia – My Blue Sky Website & Messaging System",
+    "dates": "2022, 2025",
+    "description": "A modernised CMS platform powering a public website supporting victims of forced marriage from diverse backgrounds, enabling content creators to intuitively publish educational resources while integrating secure, privacy-sensitive messaging tools that allow potential victims to safely connect with volunteer lawyers.",
+    "responsibilities": "Architect a full-stack infrastructure spanning a CMS-driven public website and authenticated messaging system. Implement engineer solution to integrate off-the-shelves CMS (Storyblok) for specilised content workflow. Collaborate with UX designers to implement complex interactive behaviours and content structures. Deploy and manage production infrastructure on cloud platforms, ensuring reliability and scalability.",
+    "highlights": "Reduced messaging infrastructure costs by designing a serverless real-time chat system using AWS API Gateway WebSockets and Lambda, eliminating idle server expenses while scaling automatically on demand. Implemented a localisation workflow integrating Storyblok content modelling with i18n tooling to automate multilingual publishing, reducing manual translation workload and service costs. Engineered a dynamic React quiz framework driven by Storyblok JSON schemas and routing logic, enabling interactive quiz pop-ups and adaptive content flows directly from CMS configuration beyond typical agency CMS capabilities.",
+    "impact": "Delivered a stable production system operating continuously for three years with minimal operational intervention. The decoupled CMS architecture enabled the organisation to manage content updates independently while protecting safety-critical behaviours. Reduced developer dependency by approximately 80%, allowing maintenance budgets to shift toward new features rather than bug fixes and sustaining a long-term engagement through ongoing platform improvements.",
+    "technologies": "Next.js, React, Storyblok, Node.js, PostgreSQL, AWS ECS Fargate, AWS Lambda, AWS API Gateway WebSocket, AWS Route53, AWS CloudWatch, Docker, Terraform, JWT, bcrypt, reCAPTCHA, Formik, Yup, React Context API, AWS SES, SMTP, DKIM, SSL, OAuth2",
+    "skills": "Full-stack architecture, Cloud Infrastructure Design, Infrastructure-as-Code, Real-time Messaging System, PostgreSQL schema design, OAuth2 integration, CMS architecture, Docker deployment, security-focused UX implementation, Improving Email Deliverability"
+  },
+  {
+    "project": "Enterprise Network Proxy",
+    "dates": "2022–2023",
+    "description": "A production-ready network proxy for logging, managing and control access to hardware devices in an existing enterprise system",
+    "responsibilities": "Prepare software packaging and installation processes for system components. Author and maintain installation and deployment documentation. Configure runtime environment and infrastructure for system hosts. Package and deploy components across Linux distributions. Troubleshoot system compatibility and deployment issues. Validate deployment architecture and operational readiness.",
+    "highlights": "Implemented RPM packaging pipeline compatible with RHEL and derivatives. Set up remote build environments using Docker and EC2 to overcome build failures. Developed systemd service files and automation scripts for setup, run, cleanup, and uninstall. Resolved PostgreSQL driver and permission issues on enterprise Linux hosts. Established SSH-based host communication and authentication between components.",
+    "impact": "The system ran reliably in enterprise-level production environment, fostering ongoing client engagement and repeat project opportunities\n",
+    "technologies": "RPM, SPEC files, RHEL, AlmaLinux, Docker, EC2, systemd, SSH, PostgreSQL, Bash scripting, LDAP",
+    "skills": "DevOps, Deployment Engineering, Linux Systems, Automation"
+  }
 ]

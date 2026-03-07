@@ -14,6 +14,8 @@
     jsonEditorModal: document.getElementById('json-editor-modal'),
     closeEditorBtn: document.getElementById('close-editor-btn'),
     jedisonContainer: document.getElementById('jedison-container'),
+    downloadJsonBtn: document.getElementById('download-json-btn'),
+    copyJsonBtn: document.getElementById('copy-json-btn'),
   };
 
   const state = {
@@ -128,6 +130,8 @@
     // JSON Editor modal events
     els.editJsonBtn.addEventListener('click', openJsonEditor);
     els.closeEditorBtn.addEventListener('click', closeJsonEditor);
+    els.downloadJsonBtn.addEventListener('click', downloadEditedJson);
+    els.copyJsonBtn.addEventListener('click', copyEditedJson);
     els.jsonEditorModal.addEventListener('click', (e) => {
       if (e.target === els.jsonEditorModal) closeJsonEditor();
     });
@@ -504,6 +508,11 @@
 
   let jedisonInstance = null;
 
+  function isLocalDevelopment() {
+    const hostname = window.location.hostname;
+    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '' || hostname.startsWith('192.168.');
+  }
+
   async function openJsonEditor() {
     console.log('[JSON Editor] Edit button clicked');
     try {
@@ -581,8 +590,20 @@
       });
       console.log('[JSON Editor] Jedison initialized:', jedisonInstance);
 
-      // Show modal
+      // Show modal and buttons
       els.jsonEditorModal.style.display = 'block';
+      els.copyJsonBtn.style.display = 'block';
+
+      // Only show save button in local development
+      if (isLocalDevelopment()) {
+        els.downloadJsonBtn.style.display = 'block';
+        console.log('[JSON Editor] Local development detected - Save button enabled');
+      } else {
+        els.downloadJsonBtn.style.display = 'none';
+        console.log('[JSON Editor] Production deployment detected - Save button hidden');
+      }
+
+      document.body.style.overflow = 'hidden';
       console.log('[JSON Editor] Modal displayed');
     } catch (err) {
       console.error('[JSON Editor] Failed to open JSON editor:', err);
@@ -593,10 +614,136 @@
   function closeJsonEditor() {
     console.log('[JSON Editor] Closing editor');
     els.jsonEditorModal.style.display = 'none';
+    els.downloadJsonBtn.style.display = 'none';
+    els.copyJsonBtn.style.display = 'none';
+    document.body.style.overflow = '';
     if (jedisonInstance) {
       els.jedisonContainer.innerHTML = '';
       jedisonInstance = null;
       console.log('[JSON Editor] Editor instance cleared');
+    }
+  }
+
+  async function downloadEditedJson() {
+    if (!jedisonInstance) {
+      console.error('[JSON Editor] No editor instance');
+      return;
+    }
+
+    if (!isLocalDevelopment()) {
+      alert('File saving is only available in local development.\nUse "Copy JSON" instead and paste into your projects.json file.');
+      return;
+    }
+
+    try {
+      const editedData = jedisonInstance.getValue();
+      console.log('[JSON Editor] Getting edited data:', editedData);
+
+      // Try direct save via backend endpoint first
+      try {
+        console.log('[JSON Editor] Attempting direct save to content/projects.json');
+        const response = await fetch('http://localhost:3000/api/save-projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(editedData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          console.log('[JSON Editor] File saved successfully via backend');
+          alert('✓ Saved directly to content/projects.json!\n\nRefresh the page to see your changes.');
+          return;
+        } else {
+          console.warn('[JSON Editor] Backend save failed:', result.error || 'Unknown error');
+        }
+      } catch (backendErr) {
+        console.warn('[JSON Editor] Backend endpoint not available, falling back to file picker:', backendErr);
+      }
+
+      const jsonString = JSON.stringify(editedData, null, 2);
+
+      // Fallback to File System Access API (modern browsers)
+      if ('showSaveFilePicker' in window) {
+        try {
+          console.log('[JSON Editor] Using File System Access API');
+          const handle = await window.showSaveFilePicker({
+            suggestedName: 'projects.json',
+            startIn: 'downloads',
+            types: [{
+              description: 'JSON Files',
+              accept: { 'application/json': ['.json'] }
+            }]
+          });
+
+          const writable = await handle.createWritable();
+          await writable.write(jsonString);
+          await writable.close();
+
+          console.log('[JSON Editor] File saved successfully');
+          alert('✓ Saved to file!\n\nNavigate to content/projects.json in your project folder.\nRefresh the page to see changes.');
+          return;
+        } catch (fsErr) {
+          if (fsErr.name === 'AbortError') {
+            console.log('[JSON Editor] User cancelled save dialog');
+            return;
+          }
+          console.warn('[JSON Editor] File System Access API failed, falling back to download:', fsErr);
+        }
+      }
+
+      // Final fallback to traditional download
+      console.log('[JSON Editor] Using download fallback');
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'projects.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      console.log('[JSON Editor] Download initiated');
+      alert('JSON downloaded! Replace content/projects.json with the downloaded file, then refresh.');
+    } catch (err) {
+      console.error('[JSON Editor] Save failed:', err);
+      alert('Failed to save JSON. Check console for details.');
+    }
+  }
+
+  async function copyEditedJson() {
+    if (!jedisonInstance) {
+      console.error('[JSON Editor] No editor instance');
+      return;
+    }
+    try {
+      const editedData = jedisonInstance.getValue();
+      console.log('[JSON Editor] Getting edited data for copy:', editedData);
+
+      const jsonString = JSON.stringify(editedData, null, 2);
+      await navigator.clipboard.writeText(jsonString);
+
+      console.log('[JSON Editor] Copied to clipboard');
+
+      // Visual feedback
+      const btn = els.copyJsonBtn;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="bi bi-check"></i> Copied!';
+      btn.classList.remove('btn-secondary');
+      btn.classList.add('btn-success');
+
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('btn-success');
+        btn.classList.add('btn-secondary');
+      }, 2000);
+    } catch (err) {
+      console.error('[JSON Editor] Copy failed:', err);
+      alert('Failed to copy JSON. Check console for details.');
     }
   }
 })();
