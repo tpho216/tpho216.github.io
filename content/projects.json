@@ -1,6 +1,6 @@
 [
   {
-    "project": "Gamification Training Platform",
+    "project": "Maritime VR Training Platform",
     "dates": "2023–2024",
     "description": "Cloud-based gamification and training platform supporting multiplayer and singleplayer simulation scenarios for a highly sensitive and private system.",
     "responsibilities": "Investigate and implement a secure self-hosted GitLab instance on Azure with 2FA, VPN, and SSL; evaluate and document LMS platforms; implement full-stack Training Course Management including courses, scenarios, and user roles; integrate microservices to orchestrate pixel streaming instances; document security architecture and ISM compliance.",
