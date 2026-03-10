@@ -731,15 +731,13 @@
 
       // Visual feedback
       const btn = els.copyJsonBtn;
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '<i class="bi bi-check"></i> Copied!';
-      btn.classList.remove('btn-secondary');
-      btn.classList.add('btn-success');
+      const prevVariant = btn.getAttribute('variant') || 'default';
+      btn.setAttribute('variant', 'success');
+      btn.innerHTML = '\u2713 Copied!';
 
       setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.classList.remove('btn-success');
-        btn.classList.add('btn-secondary');
+        btn.setAttribute('variant', prevVariant);
+        btn.innerHTML = '<sl-icon slot="prefix" name="clipboard"></sl-icon> Copy JSON';
       }, 2000);
     } catch (err) {
       console.error('[JSON Editor] Copy failed:', err);

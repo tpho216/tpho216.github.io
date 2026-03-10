@@ -41,7 +41,7 @@ body {
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg);
+  background: var(--bg) !important;
   color: var(--text);
   line-height: 1.45;
 }
@@ -55,6 +55,16 @@ body {
     radial-gradient(900px 700px at 60% 90%, rgba(255, 160, 122, 0.13), transparent 60%);
   pointer-events: none;
   filter: saturate(1.1);
+}
+
+@media (prefers-color-scheme: light) {
+  .bg {
+    background:
+      radial-gradient(900px 600px at 20% 0%, rgba(119, 168, 255, 0.12), transparent 60%),
+      radial-gradient(900px 700px at 80% 20%, rgba(103, 232, 163, 0.08), transparent 60%),
+      radial-gradient(900px 700px at 60% 90%, rgba(255, 160, 122, 0.06), transparent 60%);
+    filter: saturate(0.9);
+  }
 }
 
 .container {
@@ -87,7 +97,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, rgba(119, 168, 255, 0.85), rgba(103, 232, 163, 0.65));
-  color: rgba(0, 0, 0, 0.8);
+  color: #111;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
   user-select: none;
 }
