@@ -21,6 +21,13 @@
     searchResultsSection: document.getElementById('search-results-section'),
   };
 
+  // Validate that critical elements exist
+  Object.entries(els).forEach(([key, el]) => {
+    if (!el) {
+      console.warn(`[Init] Element not found: ${key}`);
+    }
+  });
+
   const state = {
     db: null,
     buildInfo: null,
@@ -67,6 +74,10 @@
   });
 
   function setStatus(text, tone) {
+    if (!els.status) {
+      console.warn('[setStatus] status element not found');
+      return;
+    }
     els.status.textContent = text;
     els.status.dataset.tone = tone || 'info';
   }
@@ -124,23 +135,30 @@
       render();
     }, DEBOUNCE_MS);
 
-    els.search.addEventListener('input', onInput);
-    els.clear.addEventListener('click', () => {
-      els.search.value = '';
-      state.query = '';
-      if (state.db) state.results = runSearch(state.db, parseQuery(''));
-      els.search.focus();
-      render();
-    });
+    if (els.search) {
+      els.search.addEventListener('input', onInput);
+    }
+    
+    if (els.clear && els.search) {
+      els.clear.addEventListener('click', () => {
+        els.search.value = '';
+        state.query = '';
+        if (state.db) state.results = runSearch(state.db, parseQuery(''));
+        els.search.focus();
+        render();
+      });
+    }
 
     // JSON Editor modal events
-    els.editJsonBtn.addEventListener('click', openJsonEditor);
-    els.closeEditorBtn.addEventListener('click', closeJsonEditor);
-    els.downloadJsonBtn.addEventListener('click', downloadEditedJson);
-    els.copyJsonBtn.addEventListener('click', copyEditedJson);
-    els.jsonEditorModal.addEventListener('click', (e) => {
-      if (e.target === els.jsonEditorModal) closeJsonEditor();
-    });
+    if (els.editJsonBtn) els.editJsonBtn.addEventListener('click', openJsonEditor);
+    if (els.closeEditorBtn) els.closeEditorBtn.addEventListener('click', closeJsonEditor);
+    if (els.downloadJsonBtn) els.downloadJsonBtn.addEventListener('click', downloadEditedJson);
+    if (els.copyJsonBtn) els.copyJsonBtn.addEventListener('click', copyEditedJson);
+    if (els.jsonEditorModal) {
+      els.jsonEditorModal.addEventListener('click', (e) => {
+        if (e.target === els.jsonEditorModal) closeJsonEditor();
+      });
+    }
 
     // View toggle
     document.querySelectorAll('.toggle-btn[data-group]').forEach((btn) => {
@@ -158,16 +176,16 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && !isTextInputFocused()) {
         e.preventDefault();
-        els.search.focus();
+        if (els.search) els.search.focus();
         return;
       }
       if (e.key === 'Escape') {
-        if (els.search.value) {
+        if (els.search && els.search.value) {
           els.search.value = '';
           state.query = '';
           if (state.db) state.results = runSearch(state.db, parseQuery(''));
           render();
-        } else {
+        } else if (els.search) {
           els.search.blur();
         }
       }
@@ -183,6 +201,10 @@
   }
 
   function renderBuildInfo(buildInfo) {
+    if (!els.buildTime) {
+      console.warn('[renderBuildInfo] buildTime element not found');
+      return;
+    }
     if (buildInfo && buildInfo.buildTime) {
       const d = new Date(buildInfo.buildTime);
       els.buildTime.textContent = 'Last updated: ' + d.toLocaleString();
@@ -379,6 +401,13 @@
   }
 
   function render() {
+    // Guard against missing DOM elements
+    if (!els.resultsCount || !els.resultsQuery || !els.empty || !els.featuredSection || 
+        !els.searchResultsSection || !els.viewToggleContainer || !els.swimlanesSection) {
+      console.warn('[render] Required DOM elements not found, skipping render');
+      return;
+    }
+
     const q = String(state.query || '').trim();
     const results = state.results || [];
     const isSearching = q.length > 0;
@@ -393,8 +422,10 @@
       els.resultsCount.textContent = 'Error';
       els.resultsQuery.textContent = 'Initialization failed.';
       els.empty.hidden = false;
-      els.empty.querySelector('.empty-title').textContent = 'Something went wrong';
-      els.empty.querySelector('.empty-sub').textContent =
+      const emptyTitle = els.empty.querySelector('.empty-title');
+      const emptySub = els.empty.querySelector('.empty-sub');
+      if (emptyTitle) emptyTitle.textContent = 'Something went wrong';
+      if (emptySub) emptySub.textContent =
         'Please refresh. If the problem persists, open the console for details.';
       return;
     }
@@ -489,6 +520,10 @@
   }
 
   function renderFeaturedProjects(projects) {
+    if (!els.featuredSection) {
+      console.warn('[renderFeaturedProjects] featuredSection element not found');
+      return;
+    }
     els.featuredSection.textContent = '';
     if (!projects.length) return;
 
@@ -770,6 +805,11 @@
 
   async function openJsonEditor() {
     console.log('[JSON Editor] Edit button clicked');
+    if (!els.jedisonContainer || !els.jsonEditorModal || !els.copyJsonBtn || !els.downloadJsonBtn) {
+      console.warn('[openJsonEditor] Required elements not found');
+      alert('JSON editor is not available. Some page elements are missing.');
+      return;
+    }
     try {
       // Fetch the projects.json file
       console.log('[JSON Editor] Fetching content/projects.json...');
@@ -868,6 +908,10 @@
 
   function closeJsonEditor() {
     console.log('[JSON Editor] Closing editor');
+    if (!els.jsonEditorModal || !els.downloadJsonBtn || !els.copyJsonBtn || !els.jedisonContainer) {
+      console.warn('[closeJsonEditor] Required elements not found');
+      return;
+    }
     els.jsonEditorModal.style.display = 'none';
     els.downloadJsonBtn.style.display = 'none';
     els.copyJsonBtn.style.display = 'none';
