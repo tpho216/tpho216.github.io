@@ -1,7 +1,11 @@
 [
   {
     "project": "Maritime VR Training Platform",
-    "dates": "2023–2024",
+    "category": "Cloud, Infrastructure & DevOps",
+    "dates": [
+      2023,
+      2024
+    ],
     "description": "Cloud-based gamification and training platform supporting multiplayer and singleplayer simulation scenarios for a highly sensitive and private system.",
     "responsibilities": "Investigate and implement a secure self-hosted GitLab instance on Azure with 2FA, VPN, and SSL; evaluate and document LMS platforms; implement full-stack Training Course Management including courses, scenarios, and user roles; integrate microservices to orchestrate pixel streaming instances; document security architecture and ISM compliance.",
     "highlights": "Architected a fully private, VPN-gated Azure cloud infrastructure with self-hosted GitLab Enterprise, enforced 2FA, and automated SSL. Drove the strategic pivot from off-the-shelf LMS to a bespoke Training Course Management system, leading UI/UX direction and building it end-to-end at pace. Led ISM/ISO27001 compliance review, delivering a risk assessment that secured stakeholder confidence.",
@@ -11,7 +15,11 @@
   },
   {
     "project": "Aborignal Community Health Platform (Web + Mobile)",
-    "dates": "2020–2022",
+    "category": "Mobile, IoT & Embedded",
+    "dates": [
+      2020,
+      2022
+    ],
     "description": "Digital platform supporting Aboriginal communities with health information, research data collection, and cross-community communication.",
     "responsibilities": "Build React admin portal and React Native mobile app, integrate existing Firebase backend, establish deployment processes and team development standards.",
     "highlights": "Architected cross-platform solution using modular design patterns, enabling code reuse between web and mobile. Established CI/CD pipeline using Expo EAS for automated testing and deployment.",
@@ -21,7 +29,11 @@
   },
   {
     "project": "Structural & Catalogue Management Platform",
-    "dates": "2024–2025",
+    "category": "Full-Stack & Product Engineering",
+    "dates": [
+      2024,
+      2025
+    ],
     "description": "Online desktop platform supporting complex structural calculations, workflow validation, catalogue management, JSON Schema–validated templates, and admin portal functionality for civil engineering operations.",
     "responsibilities": "Drive project discovery and scope alignment, define backend architecture and data models, implement authentication and CRUD APIs, support admin portal development, document structural modelling decisions, define and enforce JSON Schema validations for catalogue and template data, and seed test/real databases.",
     "highlights": "Bridged domain requirements with engineering delivery, designed modular backend architecture, and implemented secure AWS infrastructure. Captured complex structural logic (bracing nodes, base plates, ULS/SLS formulas), implemented scalable ERD and functional modules, and established CI/CD with unit and E2E tests. Leveraged JSON Schema to enforce validation and generate dynamic catalogue/templates, reducing repetitive frontend coding, ensuring consistent data, and simplifying future maintenance.",
@@ -31,7 +43,11 @@
   },
   {
     "project": "Quantum Circuit Builder with IoT Mobile Onboarding",
-    "dates": "2021–2022",
+    "category": "Mobile, IoT & Embedded",
+    "dates": [
+      2021,
+      2022
+    ],
     "description": "System enabling students to design and simulate quantum circuits through an interactive web interface connected to a self-hosted quantum simulator, with mobile-based device onboarding and remote device management.",
     "responsibilities": "Develop cross-platform mobile application to onboard Raspberry Pi simulator devices via Wi-Fi hotspot workflow, implement Flask-based REST API exposing quantum simulator functionality, build interactive web application for constructing and simulating quantum circuits, integrate mobile, web, and backend components, and implement firmware programming for onboarding indicators and WLAN module configuration.",
     "highlights": "Delivered an end-to-end architecture connecting mobile onboarding, web-based circuit design, and integrated quantum simulation. Implemented secure device onboarding workflow using Wi-Fi hotspot networking, translated visual quantum circuits into simulator-compatible inputs, and programmed Raspberry Pi peripherals for user feedback during device setup. Introduced Docker-based over-the-air update capability enabling remote device software updates and maintenance.",
@@ -41,7 +57,11 @@
   },
   {
     "project": "Civil Design Cost Estimation Web Platform",
-    "dates": "2022, 2024",
+    "category": "Full-Stack & Product Engineering",
+    "dates": [
+      2022,
+      2024
+    ],
     "description": "Full-stack platform enabling civil design teams to estimate construction costs in real time based on structural designs. The system improves supply chain transparency, reduces inefficiencies in traditional quoting workflows, accelerates design iterations, and helps suppliers forecast demand more accurately.",
     "responsibilities": "Lead development team across the SDLC lifecycle, collaborate with designers and engineers to define system architecture and database models, implement full-stack application features, establish CI/CD pipelines, manage GitLab repositories and submodules, and work directly with clients to implement complex engineering and business requirements.",
     "highlights": "Designed scalable TypeScript-based architecture supporting real-time cost calculations and supplier data integration. Implemented automated testing strategy including unit, integration, and end-to-end tests using Jest. Established GitLab CI/CD deployment pipelines and managed containerized deployments on AWS ECS with images stored in ECR. Integrated external services including Google Maps and email notifications via AWS SES while configuring Route53 networking for production infrastructure.",
@@ -51,7 +71,11 @@
   },
   {
     "project": "Anti Slavery Australia – My Blue Sky Website & Messaging System",
-    "dates": "2022, 2025",
+    "category": "Full-Stack & Product Engineering",
+    "dates": [
+      2022,
+      2025
+    ],
     "description": "A modernised CMS platform powering a public website supporting victims of forced marriage from diverse backgrounds, enabling content creators to intuitively publish educational resources while integrating secure, privacy-sensitive messaging tools that allow potential victims to safely connect with volunteer lawyers.",
     "responsibilities": "Architect a full-stack infrastructure spanning a CMS-driven public website and authenticated messaging system. Implement engineer solution to integrate off-the-shelves CMS (Storyblok) for specilised content workflow. Collaborate with UX designers to implement complex interactive behaviours and content structures. Deploy and manage production infrastructure on cloud platforms, ensuring reliability and scalability.",
     "highlights": "Reduced messaging infrastructure costs by designing a serverless real-time chat system using AWS API Gateway WebSockets and Lambda, eliminating idle server expenses while scaling automatically on demand. Implemented a localisation workflow integrating Storyblok content modelling with i18n tooling to automate multilingual publishing, reducing manual translation workload and service costs. Engineered a dynamic React quiz framework driven by Storyblok JSON schemas and routing logic, enabling interactive quiz pop-ups and adaptive content flows directly from CMS configuration beyond typical agency CMS capabilities.",
@@ -61,7 +85,11 @@
   },
   {
     "project": "Enterprise Network Proxy",
-    "dates": "2022–2023",
+    "category": "Cloud, Infrastructure & DevOps",
+    "dates": [
+      2022,
+      2023
+    ],
     "description": "A production-ready network proxy for logging, managing and control access to hardware devices in an existing enterprise system",
     "responsibilities": "Prepare software packaging and installation processes for system components. Author and maintain installation and deployment documentation. Configure runtime environment and infrastructure for system hosts. Package and deploy components across Linux distributions. Troubleshoot system compatibility and deployment issues. Validate deployment architecture and operational readiness.",
     "highlights": "Implemented RPM packaging pipeline compatible with RHEL and derivatives. Set up remote build environments using Docker and EC2 to overcome build failures. Developed systemd service files and automation scripts for setup, run, cleanup, and uninstall. Resolved PostgreSQL driver and permission issues on enterprise Linux hosts. Established SSH-based host communication and authentication between components.",
@@ -71,7 +99,11 @@
   },
   {
     "project": "Research Content Management Platform",
-    "dates": "2025 - Present ",
+    "category": "Cloud, Infrastructure & DevOps",
+    "dates": [
+      2025,
+      2026
+    ],
     "description": "A UX-driven research publishing platform for a research organisation to deliver accessible, structured knowledge content and multimedia resources to public audiences.",
     "responsibilities": "Own the investigation, evaluation, and implementation of the platform solution design. Configure cloud hosting environments and system access, including security and performance optimisations. Produce technical documentation for platform usage and administration and support transition for seamless on-premise technical handover.",
     "highlights": "Validated the platform for collaborative publishing workflows involving multiple content creators and editors with distinct privileges. Implemented bespoke theme extensions and tailored functionality to satisfy specialised feature requests. Ensured the platform satisfied usability, accessibility and r responsiveness testing requirements prior to release. Established development practices aligned with widely adopted platform conventions to support maintainability and safe upgrades. Prepared the system for operational handover to the client’s internal IT personnel and supported knowledge transfer.",
@@ -81,7 +113,10 @@
   },
   {
     "project": "Maritime Route Planning and Risk Analysis Platform",
-    "dates": "Feb 2024 – May 2024",
+    "category": "Full-Stack & Product Engineering",
+    "dates": [
+      2024
+    ],
     "description": "A decision-support platform for analysing maritime routes, navigational risks, and operational scenarios across global shipping corridors.",
     "responsibilities": "Lead application frontend architecture and design, define the backend service architecture and API structure for route computation workflows, integrate research existing algorithm interfaces , review code contributions and maintain repository quality, prepare demonstration builds for stakeholder reviews, and deliver isolated containerised solution.",
     "highlights": "Played a key role in coordinating and defining an API contract supporting route generation, statistics retrieval, and job-based processing workflows; implemented a mechanism to dynamically create and track route computation jobs; resolved geospatial dateline wrapping issues affecting global map rendering; devised schema interfaces enabling flexible ingestion of route and statistics data structure. ",
@@ -91,7 +126,10 @@
   },
   {
     "project": "Ocean Cleaning Management & Telemetry Platform",
-    "dates": "Apr 2021 – Jun 2021",
+    "category": "Mobile, IoT & Embedded",
+    "dates": [
+      2021
+    ],
     "description": "Singe Page App Administration & Mobile Application interface enabling field operators to calibrate and interact with ocean-cleaning IoT devices used by Seabin for environmental monitoring.",
     "responsibilities": "Design application architecture for the IoT mobile feature, define data models and view models, implement navigation structure, build calibration user flows, and implement services for communication between the mobile application and device telemetry infrastructure.",
     "highlights": "Designed the interaction model for multi-step sensor calibration with progressive UI states; architected telemetry handling to support multiple sensor data types; implemented asynchronous connection state handling and connection lifecycle management; created timer-based telemetry synchronization to prevent excessive event consumption; coordinated endpoint structure for device telemetry streams and command messaging.",
@@ -101,7 +139,10 @@
   },
   {
     "project": "Genetic Health Community Support Platform",
-    "dates": "Feb 2026 - Present",
+    "category": "Full-Stack & Product Engineering",
+    "dates": [
+      2026
+    ],
     "description": "A multi-platform (SPA & cross-platform application) to support parents of children with genetic conditions and internal staff responsible for curating and reviewing guidance content.",
     "responsibilities": "Own end-to-end development from Figma mock-ups to MVP and delivery. Lead in mobile, web solution design and cloud infrastructure direction.",
     "highlights": "Drove data model relationship creation while managing communication channel with client. Utilised AI Assistant such as Claude and Chat GPT to orchestrate full-stack agents to build well-rounded requirements specifications with project coming close to completion within unprecedented accelerated timelines (Reducing at least 3 months of coding tasks). Applied secure & best software practices while handling the nuance of AI codes to meet professional standards.",

@@ -6,7 +6,6 @@
     status: document.getElementById('status'),
     search: document.getElementById('global-search'),
     clear: document.getElementById('clear-search'),
-    grid: document.getElementById('projects'),
     empty: document.getElementById('empty'),
     resultsCount: document.getElementById('results-count'),
     resultsQuery: document.getElementById('results-query'),
@@ -16,6 +15,10 @@
     jedisonContainer: document.getElementById('jedison-container'),
     downloadJsonBtn: document.getElementById('download-json-btn'),
     copyJsonBtn: document.getElementById('copy-json-btn'),
+    featuredSection: document.getElementById('featured-projects-section'),
+    viewToggleContainer: document.getElementById('view-toggle-container'),
+    swimlanesSection: document.getElementById('swimlanes-section'),
+    searchResultsSection: document.getElementById('search-results-section'),
   };
 
   const state = {
@@ -26,10 +29,13 @@
     results: [],
     isReady: false,
     error: null,
+    groupBy: 'date',
+    hoveredNodeId: null,
   };
 
   const COLUMNS = [
     'project',
+    'category',
     'description',
     'responsibilities',
     'highlights',
@@ -136,6 +142,19 @@
       if (e.target === els.jsonEditorModal) closeJsonEditor();
     });
 
+    // View toggle
+    document.querySelectorAll('.toggle-btn[data-group]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.groupBy = btn.dataset.group;
+        document.querySelectorAll('.toggle-btn[data-group]').forEach((b) => {
+          b.classList.toggle('active', b.dataset.group === state.groupBy);
+        });
+        render();
+      });
+    });
+
+
+
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && !isTextInputFocused()) {
         e.preventDefault();
@@ -177,6 +196,7 @@
       CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY,
         project TEXT,
+        category TEXT,
         description TEXT,
         responsibilities TEXT,
         highlights TEXT,
@@ -184,19 +204,20 @@
         technologies TEXT,
         skills TEXT,
         dates TEXT,
-        year INTEGER
+        year_start INTEGER,
+        year_end INTEGER
       );
     `);
 
-    db.run('CREATE INDEX IF NOT EXISTS idx_projects_year ON projects(year);');
+    db.run('CREATE INDEX IF NOT EXISTS idx_projects_year ON projects(year_start, year_end);');
     db.run('CREATE INDEX IF NOT EXISTS idx_projects_project ON projects(project);');
   }
 
   function insertRows(db, rows) {
     const stmt = db.prepare(`
       INSERT INTO projects (
-        project, description, responsibilities, highlights, impact, technologies, skills, dates, year
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+        project, category, description, responsibilities, highlights, impact, technologies, skills, dates, year_start, year_end
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `);
 
     db.run('BEGIN;');
@@ -205,6 +226,7 @@
         const normalized = normalizeRow(row);
         stmt.run([
           normalized.project,
+          normalized.category,
           normalized.description,
           normalized.responsibilities,
           normalized.highlights,
@@ -212,7 +234,8 @@
           normalized.technologies,
           normalized.skills,
           normalized.dates,
-          normalized.year,
+          normalized.year_start,
+          normalized.year_end,
         ]);
       }
     } finally {
@@ -226,25 +249,32 @@
       const v = row?.[k] ?? row?.[capitalize(k)] ?? '';
       return v == null ? '' : String(v);
     };
-    const dates = get('dates');
-    const year = extractYear(dates);
+    const rawDates = row?.dates;
+    const datesArr = Array.isArray(rawDates)
+      ? rawDates.map(Number).filter(n => Number.isFinite(n) && n > 0)
+      : [];
+    const year_start = datesArr.length > 0 ? datesArr[0] : null;
+    const year_end = datesArr.length > 0 ? datesArr[datesArr.length - 1] : year_start;
 
     return {
       project: get('project'),
+      category: get('category'),
       description: get('description'),
       responsibilities: get('responsibilities'),
       highlights: get('highlights'),
       impact: get('impact'),
       technologies: get('technologies'),
       skills: get('skills'),
-      dates,
-      year,
+      dates: JSON.stringify(datesArr),
+      year_start,
+      year_end,
     };
   }
 
-  function extractYear(text) {
-    const m = String(text || '').match(/\b(19|20)\d{2}\b/);
-    return m ? Number(m[0]) : null;
+  function formatDates(year_start, year_end) {
+    if (!year_start) return '';
+    if (!year_end || year_start === year_end) return String(year_start);
+    return `${year_start} – ${year_end}`;
   }
 
   function parseQuery(input) {
@@ -308,17 +338,17 @@
       params.push(`%${s.toLowerCase()}%`);
     }
     if (parsed.year != null) {
-      where.push('(year = ?)');
-      params.push(parsed.year);
+      where.push('(year_start <= ? AND ? <= year_end)');
+      params.push(parsed.year, parsed.year);
     }
 
     const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
 
     const sql = `
-      SELECT id, ${COLUMNS.join(', ')}, year
+      SELECT id, ${COLUMNS.join(', ')}, year_start, year_end
       FROM projects
       ${whereSql}
-      ORDER BY (year IS NULL) ASC, year DESC, project COLLATE NOCASE ASC;
+      ORDER BY (year_end IS NULL) ASC, year_end DESC, project COLLATE NOCASE ASC;
     `;
 
     return { sql, params };
@@ -351,6 +381,7 @@
   function render() {
     const q = String(state.query || '').trim();
     const results = state.results || [];
+    const isSearching = q.length > 0;
 
     if (!state.isReady && !state.error) {
       els.resultsCount.textContent = 'Loading…';
@@ -361,7 +392,6 @@
     if (state.error) {
       els.resultsCount.textContent = 'Error';
       els.resultsQuery.textContent = 'Initialization failed.';
-      els.grid.textContent = '';
       els.empty.hidden = false;
       els.empty.querySelector('.empty-title').textContent = 'Something went wrong';
       els.empty.querySelector('.empty-sub').textContent =
@@ -369,19 +399,32 @@
       return;
     }
 
-    els.resultsCount.textContent = `${results.length} / ${state.allRowsCount} projects`;
-    els.resultsQuery.textContent = q ? `Query: ${q}` : 'Query: —';
+    // Switch between featured view and swimlanes
+    if (isSearching) {
+      els.featuredSection.style.display = 'none';
+      els.searchResultsSection.style.display = 'block';
+      els.viewToggleContainer.style.display = 'block';
+      els.swimlanesSection.style.display = 'block';
 
-    els.grid.textContent = '';
-    if (!results.length) {
-      els.empty.hidden = false;
-      return;
+      els.resultsCount.textContent = `${results.length} / ${state.allRowsCount} projects`;
+      els.resultsQuery.textContent = q ? `Query: ${q}` : 'Query: —';
+
+      if (!results.length) {
+        els.empty.hidden = false;
+        els.swimlanesSection.style.display = 'none';
+        return;
+      }
+      els.empty.hidden = true;
+      renderSwimLanes(results);
+    } else {
+      els.featuredSection.style.display = 'block';
+      els.viewToggleContainer.style.display = 'block';
+      els.swimlanesSection.style.display = 'block';
+      els.searchResultsSection.style.display = 'none';
+
+      renderFeaturedProjects(results.slice(0, 3));
+      renderSwimLanes(results);
     }
-    els.empty.hidden = true;
-
-    const frag = document.createDocumentFragment();
-    for (const row of results) frag.appendChild(renderCard(row));
-    els.grid.appendChild(frag);
   }
 
   function renderCard(row) {
@@ -445,12 +488,224 @@
     return card;
   }
 
+  function renderFeaturedProjects(projects) {
+    els.featuredSection.textContent = '';
+    if (!projects.length) return;
+
+    const container = document.createElement('div');
+    container.className = 'featured-projects';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'featured-header';
+    header.innerHTML = `
+      <svg class="featured-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      </svg>
+      <h2 class="featured-title">Featured</h2>
+      <div class="featured-divider"></div>
+    `;
+
+    // Grid
+    const grid = document.createElement('div');
+    grid.className = 'featured-grid';
+
+    projects.forEach((project, index) => {
+      const card = renderFeaturedCard(project, index);
+      grid.appendChild(card);
+    });
+
+    container.appendChild(header);
+    container.appendChild(grid);
+    els.featuredSection.appendChild(container);
+  }
+
+  function renderFeaturedCard(row, index) {
+    const card = document.createElement('article');
+    card.className = 'featured-card';
+    card.style.animationDelay = `${index * 0.1}s`;
+
+    const category = document.createElement('div');
+    category.className = 'featured-category';
+    category.textContent = row.year_end || row.year_start || 'Recent';
+
+    const title = document.createElement('h3');
+    title.className = 'featured-card-title';
+    title.textContent = row.project || 'Untitled project';
+
+    const excerpt = document.createElement('p');
+    excerpt.className = 'featured-excerpt';
+    excerpt.textContent = String(row.description || '').trim() || '—';
+
+    const meta = document.createElement('div');
+    meta.className = 'featured-meta';
+    meta.innerHTML = `
+      <span>${formatDates(row.year_start, row.year_end)}</span>
+      <svg class="featured-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    `;
+
+    card.appendChild(category);
+    card.appendChild(title);
+    card.appendChild(excerpt);
+    card.appendChild(meta);
+
+    return card;
+  }
+
+  function renderSwimLanes(projects) {
+    els.swimlanesSection.textContent = '';
+    if (!projects.length) return;
+
+    const lanes = state.groupBy === 'category'
+      ? groupProjectsByCategory(projects)
+      : groupProjectsIntoLanes(projects);
+
+    const inner = document.createElement('div');
+    inner.className = 'swimlanes-inner';
+    lanes.forEach(lane => inner.appendChild(renderSwimLane(lane.title, lane.projects)));
+    els.swimlanesSection.appendChild(inner);
+  }
+
+  function renderSwimLane(title, projects) {
+    const lane = document.createElement('div');
+    lane.className = 'swim-lane';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'lane-header';
+    header.innerHTML = `
+      <div class="lane-indicator"></div>
+      <h2 class="lane-title">${title}</h2>
+      <div class="lane-divider"></div>
+    `;
+
+    // Nodes container
+    const nodes = document.createElement('div');
+    nodes.className = 'lane-nodes';
+
+    projects.forEach((project, index) => {
+      const node = renderProjectNode(project, index);
+      nodes.appendChild(node);
+    });
+
+    lane.appendChild(header);
+    lane.appendChild(nodes);
+
+    return lane;
+  }
+
+  function renderProjectNode(row, index) {
+    const node = document.createElement('article');
+    node.className = 'project-node';
+    node.id = `node-${row.id}`;
+    if (index < 5) node.style.animationDelay = `${index * 0.1}s`;
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'node-header';
+    header.innerHTML = `
+      <div class="node-status">
+        <div class="status-dot status-active"></div>
+        <span class="status-text">${formatDates(row.year_start, row.year_end)}</span>
+      </div>
+    `;
+
+    // Title
+    const title = document.createElement('h3');
+    title.className = 'node-title';
+    title.textContent = row.project || 'Untitled project';
+
+    // Description
+    const desc = document.createElement('p');
+    desc.className = 'node-description';
+    desc.textContent = String(row.description || '').trim() || '—';
+
+    // Tags
+    const tags = document.createElement('div');
+    tags.className = 'node-tags';
+    const techTags = splitTags(row.technologies).slice(0, 3);
+    techTags.forEach(tech => {
+      const tag = document.createElement('span');
+      tag.className = 'node-tag';
+      tag.textContent = tech;
+      tags.appendChild(tag);
+    });
+
+    const allTech = splitTags(row.technologies);
+    if (allTech.length > 3) {
+      const more = document.createElement('span');
+      more.className = 'node-tag-more';
+      more.textContent = `+${allTech.length - 3}`;
+      tags.appendChild(more);
+    }
+
+    node.appendChild(header);
+    node.appendChild(title);
+    node.appendChild(desc);
+    node.appendChild(tags);
+
+    return node;
+  }
+
+  function groupProjectsIntoLanes(projects) {
+    const grouped = new Map();
+
+    projects.forEach(project => {
+      const year = project.year_end || project.year_start;
+      const lane = getLaneForYear(year);
+      if (!grouped.has(lane)) grouped.set(lane, []);
+      grouped.get(lane).push(project);
+    });
+
+    return Array.from(grouped.entries())
+      .sort((a, b) => getLaneYear(b[0]) - getLaneYear(a[0]))
+      .map(([title, projects]) => ({ title, projects }));
+  }
+
+  function groupProjectsByCategory(projects) {
+    const ORDER = [
+      'Full-Stack & Product Engineering',
+      'Cloud, Infrastructure & DevOps',
+      'Mobile, IoT & Embedded',
+    ];
+    const grouped = new Map();
+
+    projects.forEach(project => {
+      const lane = project.category || 'Other';
+      if (!grouped.has(lane)) grouped.set(lane, []);
+      grouped.get(lane).push(project);
+    });
+
+    return Array.from(grouped.entries())
+      .sort((a, b) => {
+        const ai = ORDER.indexOf(a[0]);
+        const bi = ORDER.indexOf(b[0]);
+        if (ai === -1 && bi === -1) return a[0].localeCompare(b[0]);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      })
+      .map(([title, projects]) => ({ title, projects }));
+  }
+
+  function getLaneForYear(year) {
+    const currentYear = new Date().getFullYear();
+    if (year >= currentYear - 1) return `${currentYear} - Present`;
+    if (year >= currentYear - 3) return `${currentYear - 3} - ${currentYear - 2}`;
+    if (year >= 2020) return '2020 - 2023';
+    return 'Earlier Work';
+  }
+
+  function getLaneYear(lane) {
+    const match = lane.match(/\d{4}/);
+    return match ? parseInt(match[0]) : 2000;
+  }
+
   function formatMeta(row) {
-    const dates = String(row.dates || '').trim();
-    const year = row.year != null ? String(row.year) : '';
-    if (dates) return dates;
-    if (year) return year;
-    return '';
+    return formatDates(row.year_start, row.year_end);
   }
 
   function splitTags(value) {
