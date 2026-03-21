@@ -38,6 +38,7 @@
     error: null,
     groupBy: 'date',
     hoveredNodeId: null,
+    searchId: 0,
   };
 
   const COLUMNS = [
@@ -50,6 +51,7 @@
     'technologies',
     'skills',
     'dates',
+    'search_text',
   ];
 
   const LIKE_COLUMNS = [
@@ -116,12 +118,35 @@
     state.allRowsCount = countAll(db);
     console.log('[Boot] Database ready, total projects:', state.allRowsCount);
 
+    // Seed semantic search embeddings (async, no-op if no API key).
+    if (window.SemanticSearch) {
+      setStatus('Generating embeddings…', 'info');
+      console.log('[Boot] Seeding semantic search embeddings...');
+      await window.SemanticSearch.seedEmbeddings(rows);
+      console.log('[Boot] Embedding seeding complete');
+    }
+
     state.isReady = true;
-    setStatus('Ready. Type to search.', 'success');
+    var SS = window.SemanticSearch;
+    var modeLabel = 'Ready. Type to search.';
+    if (SS) {
+      switch (SS.mode) {
+        case 'precomputed':
+          modeLabel = 'Ready. Semantic search enabled.';
+          break;
+        case 'api':
+          modeLabel = 'Ready. Semantic search enabled (API).';
+          break;
+        case 'keyword-only':
+          modeLabel = 'Ready. Keyword search active.';
+          break;
+      }
+    }
+    setStatus(modeLabel, 'success');
     console.log('[Boot] App fully initialized and ready');
 
     state.query = '';
-    state.results = runSearch(db, parseQuery(''));
+    state.results = await doSearch('');
     console.log('[Boot] Initial search complete, results:', state.results.length);
     render();
     console.log('[Boot] Initial render complete');
@@ -130,22 +155,18 @@
   function wireEvents() {
     const onInput = debounce((e) => {
       const q = String(e.target.value || '');
-      state.query = q;
-      if (state.db) state.results = runSearch(state.db, parseQuery(q));
-      render();
+      updateSearch(q);
     }, DEBOUNCE_MS);
 
     if (els.search) {
       els.search.addEventListener('input', onInput);
     }
-    
+
     if (els.clear && els.search) {
       els.clear.addEventListener('click', () => {
         els.search.value = '';
-        state.query = '';
-        if (state.db) state.results = runSearch(state.db, parseQuery(''));
+        updateSearch('');
         els.search.focus();
-        render();
       });
     }
 
@@ -182,9 +203,7 @@
       if (e.key === 'Escape') {
         if (els.search && els.search.value) {
           els.search.value = '';
-          state.query = '';
-          if (state.db) state.results = runSearch(state.db, parseQuery(''));
-          render();
+          updateSearch('');
         } else if (els.search) {
           els.search.blur();
         }
@@ -227,7 +246,8 @@
         skills TEXT,
         dates TEXT,
         year_start INTEGER,
-        year_end INTEGER
+        year_end INTEGER,
+        search_text TEXT DEFAULT ''
       );
     `);
 
@@ -238,8 +258,8 @@
   function insertRows(db, rows) {
     const stmt = db.prepare(`
       INSERT INTO projects (
-        project, category, description, responsibilities, highlights, impact, technologies, skills, dates, year_start, year_end
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        project, category, description, responsibilities, highlights, impact, technologies, skills, dates, year_start, year_end, search_text
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `);
 
     db.run('BEGIN;');
@@ -258,6 +278,7 @@
           normalized.dates,
           normalized.year_start,
           normalized.year_end,
+          normalized.search_text,
         ]);
       }
     } finally {
@@ -278,6 +299,15 @@
     const year_start = datesArr.length > 0 ? datesArr[0] : null;
     const year_end = datesArr.length > 0 ? datesArr[datesArr.length - 1] : year_start;
 
+    // Build weighted search_text for keyword scoring (mirrors SemanticSearch.buildSearchTexts)
+    const searchParts = [
+      get('technologies'), get('technologies'),
+      get('highlights'), get('responsibilities'),
+      get('impact'), get('project'),
+      get('description'), get('skills'),
+    ];
+    const search_text = searchParts.join(' ').replace(/\s+/g, ' ').trim();
+
     return {
       project: get('project'),
       category: get('category'),
@@ -290,6 +320,7 @@
       dates: JSON.stringify(datesArr),
       year_start,
       year_end,
+      search_text,
     };
   }
 
@@ -343,8 +374,10 @@
     const params = [];
 
     // Free tokens: AND semantics; each token matches any column.
+    // Strip punctuation so "Genetics?" → "genetics" matches DB content.
     for (const token of parsed.tokens || []) {
-      const t = token.toLowerCase();
+      const t = token.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!t) continue;
       const clause = LIKE_COLUMNS.map((c) => `LOWER(${c}) LIKE ?`).join(' OR ');
       where.push(`(${clause})`);
       for (let i = 0; i < LIKE_COLUMNS.length; i++) params.push(`%${t}%`);
@@ -400,10 +433,78 @@
     }
   }
 
+  // ── Hybrid search helpers ──────────────────────────────────────────
+
+  /**
+   * Run hybrid search: SQL pre-filter → semantic + keyword scoring → sort.
+   *
+   * When SemanticSearch embeddings are available and the query is pure
+   * free-text (no operators), ALL rows are scored so that semantic
+   * similarity can surface non-literal matches. SQL keyword matches
+   * are always included; additional semantic matches need score > 0.15.
+   *
+   * Falls back to plain SQL LIKE results when:
+   * - query is empty
+   * - SemanticSearch module is not loaded
+   * - no API key is configured
+   */
+  async function doSearch(query) {
+    const q = String(query || '').trim();
+    const parsed = parseQuery(q);
+    const sqlRows = runSearch(state.db, parsed);
+
+    // Empty query → return all rows (browse mode)
+    if (!q) return sqlRows;
+
+    const SS = window.SemanticSearch;
+    if (!SS) return sqlRows;
+
+    const hasOperators = parsed.tech.length > 0 || parsed.skill.length > 0 || parsed.year != null;
+    const hasFreeText = parsed.tokens.length > 0;
+
+    try {
+      if (SS.embeddingsReady && hasFreeText && !hasOperators) {
+        // Pure free-text with embeddings: score ALL rows so semantic
+        // similarity can find matches beyond literal SQL LIKE.
+        const allRows = runSearch(state.db, parseQuery(''));
+        const scored = await SS.search(allRows, q);
+
+        // Keep SQL keyword matches + high-confidence semantic matches
+        const sqlIds = new Set(sqlRows.map((r) => r.id));
+        return scored.filter((r) => sqlIds.has(r.id) || r._score > 0.15);
+      }
+
+      // Operators present or keyword-only: score the SQL-filtered set
+      return await SS.search(sqlRows, q);
+    } catch (err) {
+      console.warn('[doSearch] Hybrid scoring failed, using SQL results:', err);
+      return sqlRows;
+    }
+  }
+
+  /**
+   * Central async search + render dispatcher.
+   * Uses an incrementing ID to prevent stale async results from
+   * overwriting newer ones (race condition guard).
+   */
+  async function updateSearch(query) {
+    state.query = query;
+    if (!state.db) return;
+
+    const myId = ++state.searchId;
+    const results = await doSearch(query);
+
+    // Only update if this is still the most recent search
+    if (myId === state.searchId) {
+      state.results = results;
+      render();
+    }
+  }
+
   function render() {
     // Guard against missing DOM elements
-    if (!els.resultsCount || !els.resultsQuery || !els.empty || !els.featuredSection || 
-        !els.searchResultsSection || !els.viewToggleContainer || !els.swimlanesSection) {
+    if (!els.resultsCount || !els.resultsQuery || !els.empty || !els.featuredSection ||
+      !els.searchResultsSection || !els.viewToggleContainer || !els.swimlanesSection) {
       console.warn('[render] Required DOM elements not found, skipping render');
       return;
     }
